@@ -61,6 +61,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .barra-in{padding-block:10px;display:flex;flex-direction:column;gap:8px}
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:-4px;padding:2px 4px}
 .chips::-webkit-scrollbar{display:none}
+/* Com mouse não dá para arrastar a faixa para o lado: as categorias quebram em linhas */
+@media (hover:hover) and (pointer:fine){.chips{flex-wrap:wrap;overflow-x:visible}}
 .chip{flex:none;font:700 14px/1 var(--f-body);padding:9px 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer;white-space:nowrap}
 .chip small{font-family:var(--f-mono);font-weight:400;opacity:.7;margin-left:4px}
 .chip[aria-pressed="true"]{background:var(--fg);color:var(--card);border-color:var(--fg)}
