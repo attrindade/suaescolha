@@ -1,0 +1,5 @@
+# Fora do repositório público: protótipo desligado, análises internas e dados da conta do Cloudflare
+balanco/
+pesquisa/
+.wrangler/
+__pycache__/

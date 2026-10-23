@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sua Escolha Muda o Cenário</title>
+<meta name="description" content="Perguntas de sim ou não, cada uma com fonte, para te ajudar a decidir e para conversar com indecisos no 2º turno.">
+<link rel="canonical" href="https://suaescolha.pages.dev/">
+<meta name="theme-color" content="#009C3B">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Sua Escolha">
+<meta property="og:title" content="Sua escolha muda o cenário">
+<meta property="og:description" content="Perguntas de sim ou não, cada uma com fonte, para te ajudar a decidir e para conversar com indecisos no 2º turno.">
+<meta property="og:url" content="https://suaescolha.pages.dev/">
+<meta property="og:image" content="https://suaescolha.pages.dev/og.jpg?v=2">
+<meta property="og:image:secure_url" content="https://suaescolha.pages.dev/og.jpg?v=2">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sua escolha muda o cenário: perguntas de sim ou não, com fonte, para o 2º turno de 25 de outubro">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sua escolha muda o cenário">
+<meta name="twitter:description" content="Perguntas de sim ou não, cada uma com fonte, para te ajudar a decidir e para conversar com indecisos no 2º turno.">
+<meta name="twitter:image" content="https://suaescolha.pages.dev/og.jpg?v=2">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Sua Escolha">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+/* Layout: ferramenta de bolso para quem conversa com eleitores. Filtro por tema no topo, índice recolhível, uma pergunta por vez; o número aparece no estilo do visor da urna */
+:root{
+  --verde:#009C3B;
+  --verde-forte:#007A2F;
+  --amarelo:#FEDD00;
+  --azul:#002776;
+  --bg:#F3F6F1;
+  --card:#FFFFFF;
+  --fg:#0B1C3D;
+  --muted:#4A5A72;
+  --line:#D5DDD6;
+  --soft:#E8F1EA;
+  --tip:#FFF7C2;
+  --tip-fg:#3A3000;
+  --visor:#C9D9B8;
+  --visor-fg:#13240E;
+  --link:#00539F;
+  --on-verde:#FFFFFF;
+  --botao:#007A2F;
+  --g22:#7C3AED;--g13:#007A2F;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Share Tech Mono",ui-monospace,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --verde:#22B85A;--verde-forte:#3DD173;--amarelo:#FEDD00;--azul:#6E95FF;
+    --bg:#061430;--card:#0D2148;--fg:#EEF3FB;--muted:#A9B7CF;--line:#24396A;
+    --soft:#10305A;--tip:#3A3410;--tip-fg:#FFF1A6;--visor:#2C3D22;--visor-fg:#D6F2B8;--link:#8FB6FF;--on-verde:#04150A;--botao:#22B85A;
+    --g22:#8B5CF6;--g13:#16A34A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --verde:#22B85A;--verde-forte:#3DD173;--amarelo:#FEDD00;--azul:#6E95FF;
+  --bg:#061430;--card:#0D2148;--fg:#EEF3FB;--muted:#A9B7CF;--line:#24396A;
+  --soft:#10305A;--tip:#3A3410;--tip-fg:#FFF1A6;--visor:#2C3D22;--visor-fg:#D6F2B8;--link:#8FB6FF;--on-verde:#04150A;--botao:#22B85A;
+  --g22:#8B5CF6;--g13:#16A34A;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.faixa{background:var(--verde);color:var(--on-verde)}
+.faixa-in,.wrap,.barra-in{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.faixa-in{padding-block:14px 16px;display:flex;gap:12px;align-items:center}
+.emblema{flex:none;width:48px;height:34px;position:relative}
+.emblema::before{content:"";position:absolute;inset:2px 3px;background:var(--amarelo);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.emblema::after{content:"";position:absolute;width:15px;height:15px;border-radius:50%;background:#002776;left:16.5px;top:9.5px}
+.faixa h1{font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1;margin:0;text-transform:uppercase;text-wrap:balance}
+.faixa p{margin:3px 0 0;font-size:13px;opacity:.92}
+.listra{height:5px;background:var(--amarelo)}
+
+.barra{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.barra-in{padding-block:10px;display:flex;flex-direction:column;gap:8px}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:-4px;padding:2px 4px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:700 14px/1 var(--f-body);padding:9px 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer;white-space:nowrap}
+.chip small{font-family:var(--f-mono);font-weight:400;opacity:.7;margin-left:4px}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--card);border-color:var(--fg)}
+.acoes{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.mini{white-space:nowrap;font:700 14px/1 var(--f-body);padding:9px 12px;border-radius:8px;border:1.5px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+.mini[aria-expanded="true"]{background:var(--soft)}
+.contador{font-family:var(--f-mono);font-size:13px;color:var(--muted);letter-spacing:.4px}
+
+.wrap{padding-block:16px 40px;display:flex;flex-direction:column;gap:16px}
+.indice{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 14px 12px}
+.indice h3{font-family:var(--f-display);font-size:15px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:14px 0 4px}
+.indice ol{list-style:none;margin:0;padding:0}
+.indice button{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:baseline;width:100%;padding:9px 0;border-bottom:1px solid var(--line);font-size:16px;line-height:1.3}
+.indice button:focus-visible{outline:3px solid var(--amarelo)}
+.indice .n{font-family:var(--f-mono);color:var(--muted);font-size:13px}
+.indice .st{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.indice .st.ok{color:var(--verde-forte)}
+.indice li.atual button{font-weight:700}
+
+.card{scroll-margin-top:130px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 20px;display:flex;flex-direction:column;gap:14px}
+.eyebrow{display:flex;justify-content:space-between;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}
+.eyebrow span:last-child{font-family:var(--f-mono);font-weight:400;letter-spacing:.3px}
+.pergunta{font-family:var(--f-display);font-weight:700;font-size:27px;line-height:1.12;margin:0;text-wrap:balance}
+.pratica{background:var(--tip);color:var(--tip-fg);border-radius:10px;padding:11px 13px;font-size:16px;line-height:1.45}
+.pratica b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.botoes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{font:700 19px/1 var(--f-body);padding:16px 10px;border-radius:10px;border:2px solid var(--fg);background:transparent;color:var(--fg);cursor:pointer;min-height:56px}
+.btn:hover{background:var(--soft)}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--card)}
+.btn:disabled{cursor:default}
+.btn:disabled:not([aria-pressed="true"]){opacity:.45}
+.so-ver{align-self:center;font:700 15px/1 var(--f-body);background:none;border:none;color:var(--link);padding:6px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.btn:focus-visible,.chip:focus-visible,.mini:focus-visible,.so-ver:focus-visible,a:focus-visible,.prox:focus-visible,.link-btn:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px}
+
+.revela{display:flex;flex-direction:column;gap:14px;border-top:2px dashed var(--line);padding-top:16px}
+.urna{display:flex;align-items:stretch;gap:12px;background:var(--visor);color:var(--visor-fg);border-radius:8px;padding:10px 12px;border:1px solid rgba(0,0,0,.12)}
+.urna .num{font-family:var(--f-mono);font-size:44px;line-height:1;display:flex;gap:4px}
+.urna .num b{font-weight:400;border:1.5px solid currentColor;padding:2px 4px 0;border-radius:3px;min-width:34px;text-align:center}
+.urna .quem{display:flex;flex-direction:column;justify-content:center;font-family:var(--f-mono);font-size:13px;line-height:1.35;min-width:0}
+.urna .quem small{opacity:.75;text-transform:uppercase;letter-spacing:.6px;font-size:11px}
+.urna .quem span{font-size:15px}
+.selo{align-self:flex-start;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:4px 9px;border-radius:999px;background:var(--soft);color:var(--fg);border:1px solid var(--line)}
+.bloco h3{font-family:var(--f-display);font-size:15px;text-transform:uppercase;letter-spacing:1px;margin:0 0 4px;color:var(--muted);font-weight:700}
+.bloco p{margin:0}
+.treze{background:var(--soft);border-radius:10px;padding:12px 14px}
+.treze h3 b{font-family:var(--f-mono);font-weight:400;color:var(--fg)}
+.fontes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.fontes li{display:flex;flex-direction:column;gap:1px;padding-left:12px;border-left:3px solid var(--verde);min-width:0}
+.fontes a{color:var(--link);font-weight:700;overflow-wrap:anywhere}
+.fontes .meta{font-size:13px;color:var(--muted)}
+.video{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px}
+.video .play{flex:none;width:30px;height:30px;border-radius:50%;background:var(--verde);position:relative;margin-top:2px}
+.video .play::after{content:"";position:absolute;left:11px;top:8px;border-left:11px solid var(--on-verde);border-top:7px solid transparent;border-bottom:7px solid transparent}
+.video a{color:var(--link);font-weight:700}
+.video p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+
+.nav{display:flex;gap:10px;justify-content:space-between;align-items:center}
+.link-btn{font:700 16px/1 var(--f-body);background:none;border:none;color:var(--muted);padding:12px 4px;cursor:pointer}
+.link-btn[disabled]{visibility:hidden}
+.prox{font:700 18px/1 var(--f-body);background:var(--botao);color:var(--on-verde);border:none;border-radius:10px;padding:16px 22px;cursor:pointer;min-height:54px}
+.final h2{font-family:var(--f-display);font-size:30px;line-height:1.05;margin:0;text-transform:uppercase}
+.placar-txt{margin:0;font-size:19px;font-weight:700;line-height:1.35}
+.perfil-resumo{margin:0;font-size:14px;color:var(--muted)}
+.explica{list-style:none;margin:0;padding:0}
+.explica button{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:baseline;width:100%;padding:10px 0;border-bottom:1px solid var(--line);font-size:16px;line-height:1.3}
+.explica .n{font-family:var(--f-mono);color:var(--muted);font-size:13px}
+.tag{font-family:var(--f-mono);font-size:13px;padding:2px 7px;border-radius:4px;white-space:nowrap}
+.tag.t13{background:var(--visor);color:var(--visor-fg)}
+.tag.t22{border:1px solid var(--line);color:var(--muted)}
+.modo{display:flex;flex-direction:column;gap:4px;text-align:left;font:16px/1.3 var(--f-body);padding:16px;border-radius:12px;border:2px solid var(--fg);background:var(--card);color:var(--fg);cursor:pointer}
+.modo b{font-family:var(--f-display);font-size:24px;text-transform:uppercase;line-height:1}
+.modo span{color:var(--muted);font-size:15px}
+.modo.principal{background:var(--fg);color:var(--card)}
+.modo.principal span{color:var(--card);opacity:.85}
+.opcoes-grandes{display:flex;flex-direction:column;gap:8px}
+.opcoes-grandes button{font:700 17px/1.25 var(--f-body);text-align:left;padding:14px 16px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer;min-height:54px}
+.opcoes-grandes button small{display:block;font-weight:400;font-size:14px;color:var(--muted)}
+.cards-temas{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cards-temas button{font:700 16px/1.2 var(--f-body);padding:16px 10px;border-radius:12px;border:2px solid var(--line);background:var(--soft);color:var(--fg);cursor:pointer;min-height:72px}
+.cards-temas button[aria-pressed="true"]{border-color:var(--fg)}
+.modo:focus-visible,.opcoes-grandes button:focus-visible,.cards-temas button:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px}
+.linha-fixa{margin:0;font-size:17px;font-weight:700}
+.plano{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.qr{display:flex;gap:14px;align-items:center;background:#fff;color:#0B1C3D;border-radius:12px;padding:12px;border:1px solid var(--line)}
+.qr img{width:116px;height:116px;flex:none}
+.qr p{margin:0;font-size:15px;min-width:0;overflow-wrap:anywhere}
+.em-inicio .barra{display:none}
+.quemfez{margin:0;font-size:13px;color:var(--muted)}
+.btn-ir{display:none}
+.rua .btn-ir{display:inline-block}
+.rua .chips,.rua #btnLista,.rua #contador{display:none}
+/* Gráfico de colunas por ano, cor por governo (cores validadas para daltonismo no claro e no escuro) */
+.grafico{margin:0;display:flex;flex-direction:column;gap:10px;background:var(--soft);border-radius:12px;padding:14px}
+.g-tit{font-family:var(--f-display);font-weight:700;font-size:20px;line-height:1.1}
+.g-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;color:var(--fg)}
+.g-leg span{display:inline-flex;align-items:center;gap:6px}
+.g-sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.g22{background:var(--g22)}.g13{background:var(--g13)}
+.g-barras{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;align-items:end;height:190px;border-bottom:1px solid var(--muted);padding-top:22px}
+.g-col{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative}
+.g-bar{width:100%;max-width:34px;border-radius:4px 4px 0 0}
+.g-val{font:700 14px/1.05 var(--f-body);color:var(--fg);margin-bottom:4px;text-align:center}
+.g-val small{display:block;font-weight:400;font-size:11px}
+.lados{display:flex;flex-direction:column;gap:8px}
+.lados h4{margin:0;font-family:var(--f-display);font-weight:700;font-size:20px;line-height:1.1}
+.lado{border-left:6px solid var(--g13);background:var(--soft);border-radius:8px;padding:10px 12px}
+.lado.l22{border-left-color:var(--g22)}
+.lado b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.lado ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:2px;font-size:16px;line-height:1.35}
+.g-anos{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;margin-top:-4px}
+.g-anos span{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-align:center}
+.g-nota{margin:0;font-size:13px;color:var(--muted)}
+.revelar{display:flex;flex-direction:column;align-items:center;gap:4px;font:700 17px/1.2 var(--f-body);background:var(--amarelo);color:#0B1C3D;border:2px solid #0B1C3D;border-radius:12px;padding:14px 16px;cursor:pointer;min-height:58px;text-align:center}
+.revelar small{font-weight:400;font-size:14px}
+.revelar:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+.curto{margin:0;font-size:19px;font-weight:700;line-height:1.35}
+.detalhes{display:flex;flex-direction:column;gap:14px}
+.ligado{margin:0;font-size:15px;color:var(--muted)}
+.ligado b{color:var(--fg)}
+.perfil{display:flex;flex-direction:column;gap:16px}
+.grupo{border:0;margin:0;padding:0;min-width:0}
+.grupo legend{font-family:var(--f-display);font-size:15px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700;padding:0;margin-bottom:6px}
+.opcoes{display:flex;flex-wrap:wrap;gap:6px}
+.op{font:700 15px/1.2 var(--f-body);padding:10px 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer;min-height:42px}
+.op[aria-pressed="true"]{background:var(--fg);color:var(--card);border-color:var(--fg)}
+.campo{width:100%;font:16px/1.3 var(--f-body);padding:12px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--fg)}
+.nota{margin:0;font-size:14px;color:var(--muted)}
+.op:focus-visible,.campo:focus-visible,.explica button:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){
+  .revela:not([hidden]){animation:sobe .28s ease-out}
+  @keyframes sobe{from{transform:translateY(6px);opacity:.4}to{transform:none;opacity:1}}
+  .revelar:not([hidden]){animation:sobe .28s ease-out}
+}
+@media (min-width:600px){.pergunta{font-size:31px}.faixa h1{font-size:32px}}
+</style>
+
+<header class="faixa">
+  <div class="faixa-in">
+    <div class="emblema" aria-hidden="true"></div>
+    <div>
+      <h1>Sua escolha muda o cenário</h1>
+      <p>Segundo turno · domingo, 25 de outubro</p>
+    </div>
+  </div>
+  <div class="listra"></div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="chips" id="chips" role="toolbar" aria-label="Filtrar por tema"></div>
+    <div class="acoes">
+      <button class="mini" id="btnLista" type="button" aria-expanded="false" aria-controls="indice">☰ Lista</button>
+      <span class="contador" id="contador"></span>
+      <button class="mini btn-ir" id="btnIr" type="button">Preciso ir</button>
+      <button class="mini" id="btnNova" type="button">Nova pessoa</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <nav class="indice" id="indice" hidden aria-label="Índice das perguntas"></nav>
+
+  <section class="card" id="inicio" aria-labelledby="inicioTit">
+    <div class="eyebrow"><span>Nova conversa</span></div>
+    <h2 class="pergunta" id="inicioTit">Como vai ser a conversa?</h2>
+    <button class="modo principal" type="button" data-modo="rua"><b>Modo rua</b><span>2 a 5 minutos. A pessoa escolhe o tema e responde de 1 a 3 perguntas.</span></button>
+    <button class="modo" type="button" data-modo="completo"><b>Quiz completo</b><span>Até 25 perguntas, com resultado no fim. Com o perfil, a ordem e a quantidade se ajustam à pessoa.</span></button>
+  </section>
+
+  <section class="card" id="triagem" hidden aria-labelledby="triagemTit">
+    <div class="eyebrow"><span>Modo rua</span><span>leia em voz alta</span></div>
+    <h2 class="pergunta" id="triagemTit">Pra domingo, você já está decidida ou ainda pensando?</h2>
+    <p class="nota">Não pergunte em quem. Toque no que ela responder.</p>
+    <div class="opcoes-grandes" id="opTriagem">
+      <button type="button" data-t="pensando">Ainda pensando</button>
+      <button type="button" data-t="nenhum">Nenhum dos dois, branco, nulo ou não vai votar</button>
+      <button type="button" data-t="decidida">Já decidiu<small>sem dizer em quem</small></button>
+      <button type="button" data-t="13">Disse que é 13<small>só se ela contou sem você perguntar</small></button>
+      <button type="button" data-t="22">Disse que é 22<small>só se ela contou sem você perguntar</small></button>
+    </div>
+  </section>
+
+  <section class="card" id="temas" hidden aria-labelledby="temasTit">
+    <div class="eyebrow"><span>Modo rua</span><span>leia em voz alta</span></div>
+    <h2 class="pergunta" id="temasTit">O que mais pesa pra você hoje?</h2>
+    <p class="nota" id="temasNota">Toque no tema que ela disser.</p>
+    <div class="cards-temas" id="cardsTemas"></div>
+    <button class="prox" id="btnTerminar" type="button" hidden>Terminar a conversa</button>
+  </section>
+
+  <section class="card" id="fimRua" hidden aria-labelledby="fimRuaTit">
+    <h2 class="pergunta" id="fimRuaTit">Pra levar</h2>
+    <p id="temasLevar" hidden></p>
+    <p class="linha-fixa" id="linhaFixa">Quem decide é você.</p>
+    <div class="bloco" id="planoBox"><h3>Plano pra domingo, 25/10</h3>
+      <ul class="plano"><li>Onde você vota?</li><li>Vai de manhã ou à tarde?</li><li>Com quem ficam as crianças?</li><li>Como você chega lá?</li><li>Vai com alguém?</li></ul>
+      <p class="nota">Para ver onde você vota: app e-Título ou site do TSE (tse.jus.br). Nada é salvo.</p></div>
+    <div class="qr" id="qrBox"><img src="/qr.svg" alt="QR code que abre suaescolha.pages.dev"><p>Aponte a câmera do seu celular para levar o link e ver com calma em casa.<br><b>suaescolha.pages.dev</b></p></div>
+    <div class="pratica" id="boatoBox"><b>Cuidado com boatos</b>Até domingo vão circular áudios e vídeos falsos. Antes de repassar, pergunte: quem mandou? Qual é a fonte?</div>
+    <p class="nota" id="notaCurto" hidden>Como a pessoa já vota no 13, o quiz completo mostrou só 3 perguntas e veio direto para o plano pra domingo. Se ela quiser ver mais, toque abaixo: as respostas dadas continuam marcadas.</p>
+    <button class="prox" id="btnContinuar" type="button" hidden>Continuar com as outras perguntas</button>
+    <button class="prox" id="btnRecomecarRua" type="button">Nova pessoa</button>
+  </section>
+
+  <section class="card" id="perfilCard" hidden aria-labelledby="perfilTit">
+    <div class="eyebrow"><span>Antes das perguntas</span><span>tudo opcional</span></div>
+    <h2 class="pergunta" id="perfilTit">Sobre a pessoa</h2>
+    <button class="btn" id="btnPular" type="button">Pular e ir direto às perguntas</button>
+    <div class="pratica" id="avisoNadaGravado"><b>Nada fica gravado</b>Estas respostas não são enviadas pela internet nem guardadas no celular. Servem só para escolher a ordem das perguntas e somem ao tocar em "Nova pessoa" ou ao fechar a página.</div>
+    <div class="perfil" id="perfilCampos"></div>
+    <p class="pratica" id="avisoPerfil" hidden></p>
+    <button class="prox" id="btnComecar" type="button">Começar as perguntas</button>
+  </section>
+
+  <section class="card" id="cardQ" aria-live="polite">
+    <div class="eyebrow"><span id="catNome"></span><span id="posicao"></span></div>
+    <h2 class="pergunta" id="pergunta"></h2>
+    <button class="so-ver" id="btnPratica" type="button" hidden>O que é isso?</button>
+    <div class="pratica" id="pratica"><b>Na prática</b><span id="praticaTxt"></span></div>
+    <div class="botoes">
+      <button class="btn" id="btnSim" type="button" aria-pressed="false">Sim</button>
+      <button class="btn" id="btnNao" type="button" aria-pressed="false">Não</button>
+    </div>
+    <button class="so-ver" id="btnVer" type="button">Ver o que aconteceu e as fontes</button>
+    <button class="revelar" id="btnRevelar" type="button" hidden>Ver quem fez ou propôs isso<small>em uma frase, com as fontes</small></button>
+    <div class="revela" id="revela" hidden>
+      <div class="urna" id="urna"></div>
+      <p class="curto" id="curto"></p>
+      <figure class="grafico" id="graficoBox" hidden></figure>
+      <div class="lados" id="ladosBox" hidden></div>
+      <button class="so-ver" id="btnDetalhes" type="button">Ver detalhes e fontes</button>
+      <div class="detalhes" id="detalhes" hidden>
+      <p class="ligado"><b>Quem fez ou propôs:</b> <span id="ligado"></span></p>
+      <span class="selo" id="selo"></span>
+      <div class="bloco"><h3>O que aconteceu</h3><p id="fato"></p></div>
+      <div class="bloco" id="outroBox"><h3>O que diz o outro lado</h3><p id="outro"></p></div>
+      <div class="bloco treze" id="trezeBox"><h3>E o <b id="contraNum">13</b>?</h3><p id="treze"></p></div>
+      <div class="video" id="videoBox" hidden></div>
+      <div class="bloco"><h3>Fontes</h3><ul class="fontes" id="fontes"></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="nav" id="nav">
+    <button class="link-btn" id="btnVoltar" type="button">← Anterior</button>
+    <button class="prox" id="btnProx" type="button">Próxima</button>
+  </div>
+
+  <section class="card final" id="final" hidden>
+    <h2>Resultado</h2>
+    <div class="urna" id="placarUrna"></div>
+    <p class="placar-txt" id="placarTxt"></p>
+    <p class="perfil-resumo" id="perfilResumo" hidden></p>
+    <div class="bloco" id="explicaBox" hidden><h3>Pergunta por pergunta</h3><ol class="explica" id="explica"></ol></div>
+    <button class="so-ver" id="btnFaltam" type="button" hidden></button>
+    <div class="bloco"><h3>Plano pra domingo, 25/10</h3>
+      <ul class="plano"><li>Onde você vota?</li><li>Vai de manhã ou à tarde?</li><li>Com quem ficam as crianças?</li><li>Como você chega lá?</li><li>Vai com alguém?</li></ul>
+      <p class="nota">Para ver onde você vota: app e-Título ou site do TSE (tse.jus.br).</p></div>
+    <div class="qr"><img src="/qr.svg" alt="QR code que abre suaescolha.pages.dev"><p>Aponte a câmera do seu celular para levar o link e ver com calma em casa.<br><b>suaescolha.pages.dev</b></p></div>
+    <button class="prox" id="btnRecomecar" type="button">Nova pessoa</button>
+  </section>
+</main>
+
+
+<style>
+.rodape{max-width:560px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right,0px)) 32px max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center;font-size:14px;color:var(--muted)}
+.rodape p{margin:0}
+.rodape a{color:var(--link);font-weight:700}
+.compartilhar{font:700 16px/1 var(--f-body);padding:13px 18px;border-radius:10px;border:2px solid var(--verde);background:transparent;color:var(--fg);cursor:pointer}
+.compartilhar:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px}
+</style>
+<footer class="rodape">
+  <button class="compartilhar" id="btnCompartilhar" type="button">Mandar a ferramenta para alguém</button>
+  <p id="avisoCompartilhar" aria-live="polite"></p>
+  <p>Para abrir como app, até sem internet: no menu do navegador, toque em <b>Adicionar à tela inicial</b>.</p>
+  <p>Responsável: <span class="resp-nome">André Trindade</span> · andrettrindade@gmail.com</p>
+  <p>Nada do que você responde é gravado. <a href="https://github.com/attrindade/suaescolha">Veja o código aberto no GitHub</a>.</p>
+</footer>
+<script src="/app.js"></script>
+</body>
+</html>

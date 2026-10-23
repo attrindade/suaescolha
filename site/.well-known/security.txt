@@ -1,0 +1,4 @@
+Contact: mailto:andrettrindade@gmail.com
+Expires: 2027-01-31T23:59:59.000Z
+Preferred-Languages: pt, en
+Canonical: https://suaescolha.pages.dev/.well-known/security.txt

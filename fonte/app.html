@@ -1,0 +1,1143 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Sua Escolha Muda o Cenário</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+/* Layout: ferramenta de bolso para quem conversa com eleitores. Filtro por tema no topo, índice recolhível, uma pergunta por vez; o número aparece no estilo do visor da urna */
+:root{
+  --verde:#009C3B;
+  --verde-forte:#007A2F;
+  --amarelo:#FEDD00;
+  --azul:#002776;
+  --bg:#F3F6F1;
+  --card:#FFFFFF;
+  --fg:#0B1C3D;
+  --muted:#4A5A72;
+  --line:#D5DDD6;
+  --soft:#E8F1EA;
+  --tip:#FFF7C2;
+  --tip-fg:#3A3000;
+  --visor:#C9D9B8;
+  --visor-fg:#13240E;
+  --link:#00539F;
+  --on-verde:#FFFFFF;
+  --botao:#007A2F;
+  --g22:#7C3AED;--g13:#007A2F;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Share Tech Mono",ui-monospace,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --verde:#22B85A;--verde-forte:#3DD173;--amarelo:#FEDD00;--azul:#6E95FF;
+    --bg:#061430;--card:#0D2148;--fg:#EEF3FB;--muted:#A9B7CF;--line:#24396A;
+    --soft:#10305A;--tip:#3A3410;--tip-fg:#FFF1A6;--visor:#2C3D22;--visor-fg:#D6F2B8;--link:#8FB6FF;--on-verde:#04150A;--botao:#22B85A;
+    --g22:#8B5CF6;--g13:#16A34A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --verde:#22B85A;--verde-forte:#3DD173;--amarelo:#FEDD00;--azul:#6E95FF;
+  --bg:#061430;--card:#0D2148;--fg:#EEF3FB;--muted:#A9B7CF;--line:#24396A;
+  --soft:#10305A;--tip:#3A3410;--tip-fg:#FFF1A6;--visor:#2C3D22;--visor-fg:#D6F2B8;--link:#8FB6FF;--on-verde:#04150A;--botao:#22B85A;
+  --g22:#8B5CF6;--g13:#16A34A;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.faixa{background:var(--verde);color:var(--on-verde)}
+.faixa-in,.wrap,.barra-in{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.faixa-in{padding-block:14px 16px;display:flex;gap:12px;align-items:center}
+.emblema{flex:none;width:48px;height:34px;position:relative}
+.emblema::before{content:"";position:absolute;inset:2px 3px;background:var(--amarelo);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.emblema::after{content:"";position:absolute;width:15px;height:15px;border-radius:50%;background:#002776;left:16.5px;top:9.5px}
+.faixa h1{font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1;margin:0;text-transform:uppercase;text-wrap:balance}
+.faixa p{margin:3px 0 0;font-size:13px;opacity:.92}
+.listra{height:5px;background:var(--amarelo)}
+
+.barra{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.barra-in{padding-block:10px;display:flex;flex-direction:column;gap:8px}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:-4px;padding:2px 4px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:700 14px/1 var(--f-body);padding:9px 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer;white-space:nowrap}
+.chip small{font-family:var(--f-mono);font-weight:400;opacity:.7;margin-left:4px}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--card);border-color:var(--fg)}
+.acoes{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.mini{white-space:nowrap;font:700 14px/1 var(--f-body);padding:9px 12px;border-radius:8px;border:1.5px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+.mini[aria-expanded="true"]{background:var(--soft)}
+.contador{font-family:var(--f-mono);font-size:13px;color:var(--muted);letter-spacing:.4px}
+
+.wrap{padding-block:16px 40px;display:flex;flex-direction:column;gap:16px}
+.indice{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 14px 12px}
+.indice h3{font-family:var(--f-display);font-size:15px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:14px 0 4px}
+.indice ol{list-style:none;margin:0;padding:0}
+.indice button{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:baseline;width:100%;padding:9px 0;border-bottom:1px solid var(--line);font-size:16px;line-height:1.3}
+.indice button:focus-visible{outline:3px solid var(--amarelo)}
+.indice .n{font-family:var(--f-mono);color:var(--muted);font-size:13px}
+.indice .st{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.indice .st.ok{color:var(--verde-forte)}
+.indice li.atual button{font-weight:700}
+
+.card{scroll-margin-top:130px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 20px;display:flex;flex-direction:column;gap:14px}
+.eyebrow{display:flex;justify-content:space-between;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}
+.eyebrow span:last-child{font-family:var(--f-mono);font-weight:400;letter-spacing:.3px}
+.pergunta{font-family:var(--f-display);font-weight:700;font-size:27px;line-height:1.12;margin:0;text-wrap:balance}
+.pratica{background:var(--tip);color:var(--tip-fg);border-radius:10px;padding:11px 13px;font-size:16px;line-height:1.45}
+.pratica b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.botoes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{font:700 19px/1 var(--f-body);padding:16px 10px;border-radius:10px;border:2px solid var(--fg);background:transparent;color:var(--fg);cursor:pointer;min-height:56px}
+.btn:hover{background:var(--soft)}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--card)}
+.btn:disabled{cursor:default}
+.btn:disabled:not([aria-pressed="true"]){opacity:.45}
+.so-ver{align-self:center;font:700 15px/1 var(--f-body);background:none;border:none;color:var(--link);padding:6px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.btn:focus-visible,.chip:focus-visible,.mini:focus-visible,.so-ver:focus-visible,a:focus-visible,.prox:focus-visible,.link-btn:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px}
+
+.revela{display:flex;flex-direction:column;gap:14px;border-top:2px dashed var(--line);padding-top:16px}
+.urna{display:flex;align-items:stretch;gap:12px;background:var(--visor);color:var(--visor-fg);border-radius:8px;padding:10px 12px;border:1px solid rgba(0,0,0,.12)}
+.urna .num{font-family:var(--f-mono);font-size:44px;line-height:1;display:flex;gap:4px}
+.urna .num b{font-weight:400;border:1.5px solid currentColor;padding:2px 4px 0;border-radius:3px;min-width:34px;text-align:center}
+.urna .quem{display:flex;flex-direction:column;justify-content:center;font-family:var(--f-mono);font-size:13px;line-height:1.35;min-width:0}
+.urna .quem small{opacity:.75;text-transform:uppercase;letter-spacing:.6px;font-size:11px}
+.urna .quem span{font-size:15px}
+.selo{align-self:flex-start;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:4px 9px;border-radius:999px;background:var(--soft);color:var(--fg);border:1px solid var(--line)}
+.bloco h3{font-family:var(--f-display);font-size:15px;text-transform:uppercase;letter-spacing:1px;margin:0 0 4px;color:var(--muted);font-weight:700}
+.bloco p{margin:0}
+.treze{background:var(--soft);border-radius:10px;padding:12px 14px}
+.treze h3 b{font-family:var(--f-mono);font-weight:400;color:var(--fg)}
+.fontes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.fontes li{display:flex;flex-direction:column;gap:1px;padding-left:12px;border-left:3px solid var(--verde);min-width:0}
+.fontes a{color:var(--link);font-weight:700;overflow-wrap:anywhere}
+.fontes .meta{font-size:13px;color:var(--muted)}
+.video{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px}
+.video .play{flex:none;width:30px;height:30px;border-radius:50%;background:var(--verde);position:relative;margin-top:2px}
+.video .play::after{content:"";position:absolute;left:11px;top:8px;border-left:11px solid var(--on-verde);border-top:7px solid transparent;border-bottom:7px solid transparent}
+.video a{color:var(--link);font-weight:700}
+.video p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+
+.nav{display:flex;gap:10px;justify-content:space-between;align-items:center}
+.link-btn{font:700 16px/1 var(--f-body);background:none;border:none;color:var(--muted);padding:12px 4px;cursor:pointer}
+.link-btn[disabled]{visibility:hidden}
+.prox{font:700 18px/1 var(--f-body);background:var(--botao);color:var(--on-verde);border:none;border-radius:10px;padding:16px 22px;cursor:pointer;min-height:54px}
+.final h2{font-family:var(--f-display);font-size:30px;line-height:1.05;margin:0;text-transform:uppercase}
+.placar-txt{margin:0;font-size:19px;font-weight:700;line-height:1.35}
+.perfil-resumo{margin:0;font-size:14px;color:var(--muted)}
+.explica{list-style:none;margin:0;padding:0}
+.explica button{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:baseline;width:100%;padding:10px 0;border-bottom:1px solid var(--line);font-size:16px;line-height:1.3}
+.explica .n{font-family:var(--f-mono);color:var(--muted);font-size:13px}
+.tag{font-family:var(--f-mono);font-size:13px;padding:2px 7px;border-radius:4px;white-space:nowrap}
+.tag.t13{background:var(--visor);color:var(--visor-fg)}
+.tag.t22{border:1px solid var(--line);color:var(--muted)}
+.modo{display:flex;flex-direction:column;gap:4px;text-align:left;font:16px/1.3 var(--f-body);padding:16px;border-radius:12px;border:2px solid var(--fg);background:var(--card);color:var(--fg);cursor:pointer}
+.modo b{font-family:var(--f-display);font-size:24px;text-transform:uppercase;line-height:1}
+.modo span{color:var(--muted);font-size:15px}
+.modo.principal{background:var(--fg);color:var(--card)}
+.modo.principal span{color:var(--card);opacity:.85}
+.opcoes-grandes{display:flex;flex-direction:column;gap:8px}
+.opcoes-grandes button{font:700 17px/1.25 var(--f-body);text-align:left;padding:14px 16px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer;min-height:54px}
+.opcoes-grandes button small{display:block;font-weight:400;font-size:14px;color:var(--muted)}
+.cards-temas{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cards-temas button{font:700 16px/1.2 var(--f-body);padding:16px 10px;border-radius:12px;border:2px solid var(--line);background:var(--soft);color:var(--fg);cursor:pointer;min-height:72px}
+.cards-temas button[aria-pressed="true"]{border-color:var(--fg)}
+.modo:focus-visible,.opcoes-grandes button:focus-visible,.cards-temas button:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px}
+.linha-fixa{margin:0;font-size:17px;font-weight:700}
+.plano{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.qr{display:flex;gap:14px;align-items:center;background:#fff;color:#0B1C3D;border-radius:12px;padding:12px;border:1px solid var(--line)}
+.qr img{width:116px;height:116px;flex:none}
+.qr p{margin:0;font-size:15px;min-width:0;overflow-wrap:anywhere}
+.em-inicio .barra{display:none}
+.quemfez{margin:0;font-size:13px;color:var(--muted)}
+.btn-ir{display:none}
+.rua .btn-ir{display:inline-block}
+.rua .chips,.rua #btnLista,.rua #contador{display:none}
+/* Gráfico de colunas por ano, cor por governo (cores validadas para daltonismo no claro e no escuro) */
+.grafico{margin:0;display:flex;flex-direction:column;gap:10px;background:var(--soft);border-radius:12px;padding:14px}
+.g-tit{font-family:var(--f-display);font-weight:700;font-size:20px;line-height:1.1}
+.g-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;color:var(--fg)}
+.g-leg span{display:inline-flex;align-items:center;gap:6px}
+.g-sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.g22{background:var(--g22)}.g13{background:var(--g13)}
+.g-barras{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;align-items:end;height:190px;border-bottom:1px solid var(--muted);padding-top:22px}
+.g-col{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative}
+.g-bar{width:100%;max-width:34px;border-radius:4px 4px 0 0}
+.g-val{font:700 14px/1.05 var(--f-body);color:var(--fg);margin-bottom:4px;text-align:center}
+.g-val small{display:block;font-weight:400;font-size:11px}
+.lados{display:flex;flex-direction:column;gap:8px}
+.lados h4{margin:0;font-family:var(--f-display);font-weight:700;font-size:20px;line-height:1.1}
+.lado{border-left:6px solid var(--g13);background:var(--soft);border-radius:8px;padding:10px 12px}
+.lado.l22{border-left-color:var(--g22)}
+.lado b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.lado ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:2px;font-size:16px;line-height:1.35}
+.g-anos{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;margin-top:-4px}
+.g-anos span{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-align:center}
+.g-nota{margin:0;font-size:13px;color:var(--muted)}
+.revelar{display:flex;flex-direction:column;align-items:center;gap:4px;font:700 17px/1.2 var(--f-body);background:var(--amarelo);color:#0B1C3D;border:2px solid #0B1C3D;border-radius:12px;padding:14px 16px;cursor:pointer;min-height:58px;text-align:center}
+.revelar small{font-weight:400;font-size:14px}
+.revelar:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+.curto{margin:0;font-size:19px;font-weight:700;line-height:1.35}
+.detalhes{display:flex;flex-direction:column;gap:14px}
+.ligado{margin:0;font-size:15px;color:var(--muted)}
+.ligado b{color:var(--fg)}
+.perfil{display:flex;flex-direction:column;gap:16px}
+.grupo{border:0;margin:0;padding:0;min-width:0}
+.grupo legend{font-family:var(--f-display);font-size:15px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700;padding:0;margin-bottom:6px}
+.opcoes{display:flex;flex-wrap:wrap;gap:6px}
+.op{font:700 15px/1.2 var(--f-body);padding:10px 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer;min-height:42px}
+.op[aria-pressed="true"]{background:var(--fg);color:var(--card);border-color:var(--fg)}
+.campo{width:100%;font:16px/1.3 var(--f-body);padding:12px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--fg)}
+.nota{margin:0;font-size:14px;color:var(--muted)}
+.op:focus-visible,.campo:focus-visible,.explica button:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){
+  .revela:not([hidden]){animation:sobe .28s ease-out}
+  @keyframes sobe{from{transform:translateY(6px);opacity:.4}to{transform:none;opacity:1}}
+  .revelar:not([hidden]){animation:sobe .28s ease-out}
+}
+@media (min-width:600px){.pergunta{font-size:31px}.faixa h1{font-size:32px}}
+</style>
+
+<header class="faixa">
+  <div class="faixa-in">
+    <div class="emblema" aria-hidden="true"></div>
+    <div>
+      <h1>Sua escolha muda o cenário</h1>
+      <p>Segundo turno · domingo, 25 de outubro</p>
+    </div>
+  </div>
+  <div class="listra"></div>
+</header>
+
+<div class="barra">
+  <div class="barra-in">
+    <div class="chips" id="chips" role="toolbar" aria-label="Filtrar por tema"></div>
+    <div class="acoes">
+      <button class="mini" id="btnLista" type="button" aria-expanded="false" aria-controls="indice">☰ Lista</button>
+      <span class="contador" id="contador"></span>
+      <button class="mini btn-ir" id="btnIr" type="button">Preciso ir</button>
+      <button class="mini" id="btnNova" type="button">Nova pessoa</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <nav class="indice" id="indice" hidden aria-label="Índice das perguntas"></nav>
+
+  <section class="card" id="inicio" aria-labelledby="inicioTit">
+    <div class="eyebrow"><span>Nova conversa</span></div>
+    <h2 class="pergunta" id="inicioTit">Como vai ser a conversa?</h2>
+    <button class="modo principal" type="button" data-modo="rua"><b>Modo rua</b><span>2 a 5 minutos. A pessoa escolhe o tema e responde de 1 a 3 perguntas.</span></button>
+    <button class="modo" type="button" data-modo="completo"><b>Quiz completo</b><span>Até 25 perguntas, com resultado no fim. Com o perfil, a ordem e a quantidade se ajustam à pessoa.</span></button>
+  </section>
+
+  <section class="card" id="triagem" hidden aria-labelledby="triagemTit">
+    <div class="eyebrow"><span>Modo rua</span><span>leia em voz alta</span></div>
+    <h2 class="pergunta" id="triagemTit">Pra domingo, você já está decidida ou ainda pensando?</h2>
+    <p class="nota">Não pergunte em quem. Toque no que ela responder.</p>
+    <div class="opcoes-grandes" id="opTriagem">
+      <button type="button" data-t="pensando">Ainda pensando</button>
+      <button type="button" data-t="nenhum">Nenhum dos dois, branco, nulo ou não vai votar</button>
+      <button type="button" data-t="decidida">Já decidiu<small>sem dizer em quem</small></button>
+      <button type="button" data-t="13">Disse que é 13<small>só se ela contou sem você perguntar</small></button>
+      <button type="button" data-t="22">Disse que é 22<small>só se ela contou sem você perguntar</small></button>
+    </div>
+  </section>
+
+  <section class="card" id="temas" hidden aria-labelledby="temasTit">
+    <div class="eyebrow"><span>Modo rua</span><span>leia em voz alta</span></div>
+    <h2 class="pergunta" id="temasTit">O que mais pesa pra você hoje?</h2>
+    <p class="nota" id="temasNota">Toque no tema que ela disser.</p>
+    <div class="cards-temas" id="cardsTemas"></div>
+    <button class="prox" id="btnTerminar" type="button" hidden>Terminar a conversa</button>
+  </section>
+
+  <section class="card" id="fimRua" hidden aria-labelledby="fimRuaTit">
+    <h2 class="pergunta" id="fimRuaTit">Pra levar</h2>
+    <p id="temasLevar" hidden></p>
+    <p class="linha-fixa" id="linhaFixa">Quem decide é você.</p>
+    <div class="bloco" id="planoBox"><h3>Plano pra domingo, 25/10</h3>
+      <ul class="plano"><li>Onde você vota?</li><li>Vai de manhã ou à tarde?</li><li>Com quem ficam as crianças?</li><li>Como você chega lá?</li><li>Vai com alguém?</li></ul>
+      <p class="nota">Para ver onde você vota: app e-Título ou site do TSE (tse.jus.br). Nada é salvo.</p></div>
+    <div class="qr" id="qrBox"><img src="/qr.svg" alt="QR code que abre suaescolha.pages.dev"><p>Aponte a câmera do seu celular para levar o link e ver com calma em casa.<br><b>suaescolha.pages.dev</b></p></div>
+    <div class="pratica" id="boatoBox"><b>Cuidado com boatos</b>Até domingo vão circular áudios e vídeos falsos. Antes de repassar, pergunte: quem mandou? Qual é a fonte?</div>
+    <p class="nota" id="notaCurto" hidden>Como a pessoa já vota no 13, o quiz completo mostrou só 3 perguntas e veio direto para o plano pra domingo. Se ela quiser ver mais, toque abaixo: as respostas dadas continuam marcadas.</p>
+    <button class="prox" id="btnContinuar" type="button" hidden>Continuar com as outras perguntas</button>
+    <button class="prox" id="btnRecomecarRua" type="button">Nova pessoa</button>
+  </section>
+
+  <section class="card" id="perfilCard" hidden aria-labelledby="perfilTit">
+    <div class="eyebrow"><span>Antes das perguntas</span><span>tudo opcional</span></div>
+    <h2 class="pergunta" id="perfilTit">Sobre a pessoa</h2>
+    <button class="btn" id="btnPular" type="button">Pular e ir direto às perguntas</button>
+    <div class="pratica" id="avisoNadaGravado"><b>Nada fica gravado</b>Estas respostas não são enviadas pela internet nem guardadas no celular. Servem só para escolher a ordem das perguntas e somem ao tocar em "Nova pessoa" ou ao fechar a página.</div>
+    <div class="perfil" id="perfilCampos"></div>
+    <p class="pratica" id="avisoPerfil" hidden></p>
+    <button class="prox" id="btnComecar" type="button">Começar as perguntas</button>
+  </section>
+
+  <section class="card" id="cardQ" aria-live="polite">
+    <div class="eyebrow"><span id="catNome"></span><span id="posicao"></span></div>
+    <h2 class="pergunta" id="pergunta"></h2>
+    <button class="so-ver" id="btnPratica" type="button" hidden>O que é isso?</button>
+    <div class="pratica" id="pratica"><b>Na prática</b><span id="praticaTxt"></span></div>
+    <div class="botoes">
+      <button class="btn" id="btnSim" type="button" aria-pressed="false">Sim</button>
+      <button class="btn" id="btnNao" type="button" aria-pressed="false">Não</button>
+    </div>
+    <button class="so-ver" id="btnVer" type="button">Ver o que aconteceu e as fontes</button>
+    <button class="revelar" id="btnRevelar" type="button" hidden>Ver quem fez ou propôs isso<small>em uma frase, com as fontes</small></button>
+    <div class="revela" id="revela" hidden>
+      <div class="urna" id="urna"></div>
+      <p class="curto" id="curto"></p>
+      <figure class="grafico" id="graficoBox" hidden></figure>
+      <div class="lados" id="ladosBox" hidden></div>
+      <button class="so-ver" id="btnDetalhes" type="button">Ver detalhes e fontes</button>
+      <div class="detalhes" id="detalhes" hidden>
+      <p class="ligado"><b>Quem fez ou propôs:</b> <span id="ligado"></span></p>
+      <span class="selo" id="selo"></span>
+      <div class="bloco"><h3>O que aconteceu</h3><p id="fato"></p></div>
+      <div class="bloco" id="outroBox"><h3>O que diz o outro lado</h3><p id="outro"></p></div>
+      <div class="bloco treze" id="trezeBox"><h3>E o <b id="contraNum">13</b>?</h3><p id="treze"></p></div>
+      <div class="video" id="videoBox" hidden></div>
+      <div class="bloco"><h3>Fontes</h3><ul class="fontes" id="fontes"></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="nav" id="nav">
+    <button class="link-btn" id="btnVoltar" type="button">← Anterior</button>
+    <button class="prox" id="btnProx" type="button">Próxima</button>
+  </div>
+
+  <section class="card final" id="final" hidden>
+    <h2>Resultado</h2>
+    <div class="urna" id="placarUrna"></div>
+    <p class="placar-txt" id="placarTxt"></p>
+    <p class="perfil-resumo" id="perfilResumo" hidden></p>
+    <div class="bloco" id="explicaBox" hidden><h3>Pergunta por pergunta</h3><ol class="explica" id="explica"></ol></div>
+    <button class="so-ver" id="btnFaltam" type="button" hidden></button>
+    <div class="bloco"><h3>Plano pra domingo, 25/10</h3>
+      <ul class="plano"><li>Onde você vota?</li><li>Vai de manhã ou à tarde?</li><li>Com quem ficam as crianças?</li><li>Como você chega lá?</li><li>Vai com alguém?</li></ul>
+      <p class="nota">Para ver onde você vota: app e-Título ou site do TSE (tse.jus.br).</p></div>
+    <div class="qr"><img src="/qr.svg" alt="QR code que abre suaescolha.pages.dev"><p>Aponte a câmera do seu celular para levar o link e ver com calma em casa.<br><b>suaescolha.pages.dev</b></p></div>
+    <button class="prox" id="btnRecomecar" type="button">Nova pessoa</button>
+  </section>
+</main>
+
+<script>
+const EP7 = {t:"Revelando, ep. 7: República dos Laranjas",u:"https://www.youtube.com/watch?v=PxIvZL_mKKY",d:"Episódio de 20/10 com Fábio Porchat. O vídeo não tem capítulos, então o minuto exato ainda não foi marcado."};
+const CATS = [
+  {id:"propostas", nome:"Propostas"},
+  {id:"bolso",  nome:"Seu bolso"},
+  {id:"ambiente", nome:"Meio ambiente"},
+  {id:"eua",    nome:"Riquezas do Brasil"},
+  {id:"crime",  nome:"Segurança"},
+  {id:"fe",     nome:"Fé e família"},
+  {id:"master", nome:"Dinheiro e política"},
+  {id:"laranjas", nome:"Negócios e amizades"}
+];
+
+/* Perfil da pessoa, antes das perguntas. "se": só aparece quando o campo indicado tem aquele valor */
+const PERFIL = [
+  {id:"idade",  rot:"Faixa etária", ops:["16 a 17 anos","18 a 24 anos","25 a 34 anos","35 a 44 anos","45 a 59 anos","60 anos ou mais"]},
+  {id:"genero", rot:"Gênero", ops:["Mulher","Homem","Outro","Prefere não dizer"]},
+  {id:"escola", rot:"Escolaridade", ops:["Fundamental incompleto","Fundamental completo","Médio incompleto","Médio completo","Superior incompleto","Superior completo","Pós-graduação"]},
+  {id:"municipio", rot:"Município onde vota", texto:true},
+  {id:"t1",     rot:"Votou no 1º turno?", ops:["Sim","Não","Prefere não dizer"]},
+  {id:"t1quem", rot:"Em quem votou no 1º turno?", se:["t1","Sim"], ops:["Lula (13)","Flávio (22)","Outro candidato","Branco ou nulo","Prefere não dizer"]},
+  {id:"t2",     rot:"Já tem voto decidido no 2º turno?", ops:["Sim","Não","Prefere não dizer"]},
+  {id:"t2quem", rot:"Em quem vai votar no 2º turno?", se:["t2","Sim"], ops:["Lula (13)","Flávio (22)","Branco ou nulo","Prefere não dizer"]}
+];
+
+/* Modo rua: a pessoa escolhe o tema e vê só as perguntas dele, da mais leve para a mais pesada.
+   "leve": tema do dia a dia, o único oferecido a quem diz que não vai votar em nenhum dos dois
+   (escândalo nesse grupo tende a afastar da urna) */
+const TEMAS = [
+  {id:"comida",    nome:"Comida e preços",    qs:["cesta","salario"], leve:true},
+  {id:"trabalho",  nome:"Trabalho e renda",   qs:["jornada","irricos","mei"], leve:true},
+  {id:"saude",     nome:"Remédio e saúde",    qs:["farmacia"], leve:true},
+  {id:"aposent",   nome:"Aposentadoria e BPC", qs:["aposentadoria"], leve:true},
+  {id:"familia",   nome:"Filhos e família",   qs:["bets","univ"], leve:true},
+  {id:"ambiente",  nome:"Meio ambiente",      qs:["clima","terras"], leve:true},
+  {id:"brasil",    nome:"Empregos e riquezas do Brasil", qs:["tarifaco","privat"]},
+  {id:"seguranca", nome:"Segurança",          qs:["armas","milicia"]},
+  {id:"corrupcao", nome:"Confiança nos políticos",          qs:["filme","mentiras","lavagem"]},
+  {id:"fe",        nome:"Fé e religião",      qs:["cnbb"]}
+];
+/* Ordem pelo perfil. O voto decide se os escândalos aparecem; a idade e o gênero decidem quais temas vêm primeiro.
+   Regras combinadas com a coordenação em 22/10; sem perfil preenchido, vale a ORDEM padrão */
+const ESCANDALOS = ["cnbb","pf","mentiras","filme","mansao","apostas","laranja","lavagem","kassio","milicia","festas"];
+const PRIO_IDADE = {
+  "16 a 17 anos":["jornada","bets","univ","clima"], "18 a 24 anos":["jornada","bets","univ","clima"],
+  "25 a 34 anos":["jornada","salario","irricos","mei","cesta"], "35 a 44 anos":["jornada","salario","irricos","mei","cesta"],
+  "45 a 59 anos":["jornada","salario","irricos","mei","cesta"], "60 anos ou mais":["aposentadoria","farmacia","salario"]
+};
+const PRIO_MULHER = ["farmacia","cesta","bets"];
+function lerVoto(){
+  const flavio = perfil.t1quem === "Flávio (22)" || perfil.t2quem === "Flávio (22)";
+  const outro = perfil.t1 === "Não" || ["Outro candidato","Branco ou nulo"].includes(perfil.t1quem) || perfil.t2quem === "Branco ou nulo";
+  return { flavio, outro: outro && !flavio, lula: perfil.t2quem === "Lula (13)" && !flavio };
+}
+function ordemPorPerfil(){
+  const prio = [...(PRIO_IDADE[perfil.idade] || []), ...(perfil.genero === "Mulher" ? PRIO_MULHER : [])];
+  let ordem = [...new Set(prio)].concat(ORDEM.filter(q => !prio.includes(q)));
+  const v = lerVoto(), leve = q => !ESCANDALOS.includes(q);
+  if (v.lula) return intercalar(ordem.filter(leve)).slice(0, 3);   // já decidiu pelo 13: quiz curto e plano pra domingo
+  if (v.outro) return intercalar(ordem.filter(leve));              // escândalo nesse grupo tende a afastar da urna
+  return intercalar(ordem.filter(leve).concat(ordem.filter(q => !leve(q))));
+}
+/* Mistura as perguntas em que o 13 é "Sim" (e as que só comparam) com as em que o 13 é "Não", na proporção de
+   cada grupo, para a pessoa não sentir que tudo pede a mesma resposta. Dentro de cada grupo a ordem se mantém:
+   prioridades do perfil primeiro e, entre as de "Não", escândalos por último */
+function intercalar(ids){
+  const naoLeva = q => (BASE[q].l13 || "nao") === "nao";
+  const S = ids.filter(q => !naoLeva(q)), N = ids.filter(naoLeva), out = [];
+  let i = 0, j = 0;
+  while (i < S.length || j < N.length){
+    if (j >= N.length || (i < S.length && i / S.length <= j / N.length)) out.push(S[i++]);   // empate: começa pelo "Sim"
+    else out.push(N[j++]);
+  }
+  return out;
+}
+/* Revelação curta: uma frase por pergunta, tirada dos fatos com fonte; o texto longo fica em "Ver detalhes" */
+const CURTO = {
+  cesta:"O governo Lula já zerou, por lei, o imposto federal da cesta básica a partir de 2027.",
+  irricos:"Com Lula, quem ganha até R$ 5 mil já não paga imposto de renda, e quem ganha muito paga a conta.",
+  jornada:"O fim da 6x1, apoiado por Lula, já está na Constituição. A campanha de Flávio propõe jornada maior, paga por hora.",
+  mei:"Lula sancionou até R$ 5 mil, sem devolver, para o MEI. Flávio criticou: \"Ele acha que o povo é otário\".",
+  bets:"Lula tirou as bets do ar. Flávio defende as apostas esportivas e chamou a proibição de agressão à segurança jurídica.",
+  clima:"Com Lula, o desmatamento da Amazônia caiu ao menor nível já medido: 71% abaixo de 2022.",
+  salario:"Com Lula, o salário mínimo voltou a subir acima da inflação. Com Jair, de 2020 a 2022, não teve aumento real.",
+  farmacia:"Com Lula, os 41 itens da Farmácia Popular são de graça. O governo Jair propôs cortar 59% da verba.",
+  aposentadoria:"A equipe de Flávio estudou tirar o aumento real de aposentadorias e do BPC. Ele nega.",
+  univ:"Lula mantém as universidades federais no Ministério da Educação, com verba mínima garantida. O plano de Flávio tira elas de lá, o que pode acabar com essa garantia.",
+  privat:"Lula mantém os Correios e a Petrobras públicos. Já o plano de Flávio retoma as privatizações — e, no governo Jair, uma refinaria da Petrobras na Bahia foi vendida abaixo do preço, segundo a CGU.",
+  terras:"Flávio apresentou as terras raras do Brasil como solução para os EUA. O governo Lula quer processar tudo aqui.",
+  tarifaco:"Flávio agradeceu a Trump no dia em que ele anunciou a tarifa de 50% contra produtos brasileiros.",
+  armas:"Aliados de Flávio querem derrubar o Estatuto do Desarmamento. Lula endureceu as regras de armas em 2023.",
+  cnbb:"Flávio acusou bispos da CNBB de espalhar fake news, sem mostrar provas.",
+  pf:"Segundo Sergio Moro, Jair pediu para a PF não atrapalhar a investigação sobre o filho Flávio.",
+  mentiras:"Flávio dizia não conhecer o dono do Banco Master. Nas mensagens, chamava ele de \"irmãozão\".",
+  filme:"Flávio negociou R$ 134 milhões com o banqueiro do Master, hoje preso, para o filme sobre o pai.",
+  mansao:"Flávio usou de graça uma mansão em Angra ligada a Daniel Vorcaro (dono preso do Banco Master) e a um advogado amigo investigado pela PF.",
+  apostas:"O advogado amigo de Flávio movimentou R$ 130 milhões em 3 meses e apostou quase R$ 5 bilhões, diz a PF.",
+  laranja:"Uma mulher que disse ser doméstica aparece como chefe de 14 empresas do advogado amigo de Flávio. A PF investiga.",
+  lavagem:"A PF investiga Flávio no STF por lavagem de dinheiro: ele aparece como dono da senha geral (\"usuário master\") da conta de uma empresa em Portugal ligada a um investigado na fraude do INSS.",
+  kassio:"O banqueiro do Master organizou uma noitada com garotas de programa para Kassio Nunes Marques, ministro indicado por Jair.",
+  milicia:"Flávio homenageou um chefe de milícia e indicou um aliado citado pela PF por suposta troca de favores com o CV.",
+  festas:"Segundo a PF, o banqueiro que bancou o filme de Flávio pagava festas com jovens refugiadas."
+};
+const detalhesAbertos = {};
+const TELAS = ["inicio","perfilCard","triagem","temas","cardQ","fimRua","final"];
+let modo = "completo";     // "rua" | "completo"
+let triagem = null;        // resposta da triagem do modo rua
+const temasVistos = [];    // nomes dos temas escolhidos, para a tela final
+const praticaAberta = {};  // id -> true quando "O que é isso?" foi aberto no modo rua
+
+const BASE = {
+ cesta:{
+  cat:"propostas", t:"Cesta básica sem imposto", l13:"compara",
+  comp:"Lula já aprovou, na reforma tributária, imposto federal zero para a cesta básica. Flávio promete rever essa reforma, sem dizer se mantém a isenção da cesta.",
+  lados:[["Governo Lula · já é lei",["Imposto federal zero na cesta básica a partir de 2027","Promete devolver parte do imposto aos mais pobres"]],
+         ["Plano de Flávio · proposta",["Rever a reforma tributária","Critica as exceções da reforma","Não diz se a cesta básica fica de fora"]]],
+  p:"Você concorda que arroz, feijão, leite, carne e os outros itens da cesta básica fiquem sem imposto federal?",
+  pratica:"Imposto federal é o que vai para o governo do país. Ele vem embutido no preço que você paga no mercado.",
+  quem:"Reforma tributária do governo Lula",
+  selo:"Já é lei · começa em 2027",
+  fato:"A reforma tributária aprovada no governo Lula zera, a partir de 2027, o novo imposto federal sobre os itens da Cesta Básica Nacional, como arroz, feijão, leite, carnes, café, farinha, pão comum e óleo. O imposto estadual sobre esses itens só some aos poucos, até 2033. O plano de governo de Lula promete manter isso e devolver parte do imposto às famílias mais pobres (cashback).",
+  vinte2:"O plano de governo de Flávio promete \"a revisão e o redimensionamento da reforma tributária\" e critica as exceções da reforma, que atribui a lobbies. O plano não diz se a cesta básica entra nessa revisão.",
+  fontes:[
+   ["Agência Brasil","18/09/2026","Lula propõe criar Ministério da Segurança e aumento real do mínimo","https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/lula-propoe-criar-ministerio-da-seguranca-e-aumento-real-do-minimo"],
+   ["Agência Brasil","16/01/2025","Entenda as principais mudanças da reforma tributária","https://agenciabrasil.ebc.com.br/economia/noticia/2025-01/entenda-principais-mudancas-da-reforma-tributaria"],
+   ["Plano de governo de Flávio Bolsonaro (cópia do registrado no TSE)","2026","Páginas 30 e 71: revisão da reforma tributária","https://planodegoverno2026.com.br/planos/flavio-bolsonaro-0a34723b.pdf"]
+  ]
+ },
+ irricos:{
+  cat:"propostas", t:"Imposto dos mais ricos", l13:"sim",
+  lados:[["Governo Lula · já é lei",["Quem ganha até R$ 5 mil: imposto de renda zero","A conta é paga por quem ganha mais de R$ 50 mil por mês"]],
+         ["Plano de Flávio · proposta",["Rever os impostos criados pelo atual governo","Não diz como pagaria a isenção"]]],
+  p:"Você acha justo os mais ricos pagarem mais imposto para quem ganha até R$ 5 mil não pagar imposto de renda?",
+  pratica:"Desde janeiro de 2026, quem ganha até R$ 5 mil por mês não paga imposto de renda. Quem cobre essa conta é quem ganha mais de R$ 50 mil por mês.",
+  quem:"Governo Lula",
+  selo:"Já é lei · em vigor desde 2026",
+  fato:"A Lei 15.270, sancionada por Lula em 26/11/2025, isentou de imposto de renda quem ganha até R$ 5 mil por mês e deu desconto para quem ganha até R$ 7.350. Para pagar isso, criou um imposto mínimo para quem ganha mais de R$ 600 mil por ano. A Câmara aprovou por 493 votos a 0, e o Senado aprovou por unanimidade.",
+  vinte2:"O plano de governo de Flávio promete rever \"a majoração de impostos efetuada pelo atual governo\", sem dizer quais impostos. Se o imposto mínimo dos mais ricos cair, a isenção perde a fonte que a paga. Essa ligação é dedução nossa: o plano não fala do imposto de renda.",
+  fontes:[
+   ["Agência Câmara","26/11/2025","Ampliação da isenção de Imposto de Renda vira lei","https://www.camara.leg.br/noticias/1226918-ampliacao-da-isencao-de-imposto-de-renda-vira-lei-e-autoridades-destacam-justica-tributaria/"],
+   ["Agência Brasil","01/02/2026","IR zero para quem ganha até R$ 5 mil vale nos salários pagos este mês","https://agenciabrasil.ebc.com.br/economia/noticia/2026-02/ir-zero-para-quem-ganha-ate-r-5-mil-vale-partir-deste-mes"],
+   ["Poder360","15/06/2026","Flávio Bolsonaro defende Bolsa Família e isenção de IR até R$ 5.000","https://www.poder360.com.br/poder-eleicoes/flavio-bolsonaro-defende-bolsa-familia-e-isencao-de-ir-ate-r-5-000/"],
+   ["Plano de governo de Flávio Bolsonaro (cópia do registrado no TSE)","2026","Páginas 30 e 71: revisão da majoração de impostos","https://planodegoverno2026.com.br/planos/flavio-bolsonaro-0a34723b.pdf"]
+  ]
+ },
+ jornada:{
+  cat:"propostas", t:"Fim da escala 6x1", l13:"sim",
+  lados:[["Governo Lula · já aprovado",["2 dias de folga por semana","Salário mensal mantido","Jornada cai para 40 horas"]],
+         ["Campanha de Flávio · proposta",["Jornada acima de 44 horas","Pagamento só pelas horas trabalhadas","Sem salário mensal mínimo garantido"]]],
+  p:"Você concorda que quem tem carteira assinada tenha 2 dias de folga por semana, sem perder salário?",
+  pratica:"Escala 6x1 é trabalhar 6 dias e folgar só 1. Com o fim dela, quem tem carteira assinada passa a folgar 2 dias por semana.",
+  quem:"Governo Lula",
+  selo:"Já está na Constituição · começa em até 60 dias",
+  fato:"O fim da escala 6x1, apoiado pelo governo Lula, virou a Emenda Constitucional 141 em 16/10/2026: 2 dias de folga por semana, sem redução de salário. A jornada cai de 44 para 42 horas semanais em até 60 dias, e para 40 horas um ano depois.",
+  vinte2:"Flávio votou a favor, depois de criticar a proposta. Mas o coordenador da campanha dele, o senador Rogério Marinho (PL-RN), é autor da PEC 12/2026, que permite jornada acima de 44 horas com pagamento só pelas horas trabalhadas. O líder do PL na Câmara, Sóstenes Cavalcante, disse: \"A nossa proposta é dar opção para o trabalhador, mas sem ter uma base (de remuneração mensal) mínima.\" O plano de governo de Flávio defende \"jornada flexível\".",
+  fontes:[
+   ["Exame","14/10/2026","Líder do PL diz que Flávio vai propor PEC que permite aumento de jornada já em 2027 se for eleito","https://exame.com/brasil/lider-do-pl-diz-que-flavio-vai-propor-pec-que-permite-aumento-de-jornada-ja-em-2027-se-for-eleito/"],
+   ["Exame","15/10/2026","Como Flávio Bolsonaro votou sobre o fim da escala 6x1 no Senado?","https://exame.com/brasil/como-flavio-bolsonaro-votou-sobre-o-fim-da-escala-6x1-no-senado/"],
+   ["Agência Senado","16/10/2026","Congresso promulga o fim da escala 6x1","https://www12.senado.leg.br/noticias/materias/2026/10/16/congresso-promulga-o-fim-da-escala-6x1-e-aposentadoria-de-agentes-de-saude"],
+   ["Plano de governo de Flávio Bolsonaro (cópia do registrado no TSE)","2026","Páginas 44 e 45: jornada flexível e negociado sobre o legislado","https://planodegoverno2026.com.br/planos/flavio-bolsonaro-0a34723b.pdf"]
+  ]
+ },
+ mei:{
+  cat:"propostas", t:"Até R$ 5 mil para o MEI", l13:"sim",
+  p:"Você concorda que o governo dê até R$ 5 mil, sem precisar devolver, para o MEI investir no próprio negócio?",
+  pratica:"MEI é o microempreendedor individual: a manicure, o pipoqueiro, a costureira que têm CNPJ e pagam uma guia por mês.",
+  quem:"Governo Lula",
+  selo:"Lei sancionada em 21/10/2026",
+  fato:"A lei do programa Prospera MEI, sancionada em 21/10/2026, cria o PixMEI: até R$ 5 mil sem precisar devolver, de 2027 a 2030, para até 1 milhão de MEIs, com prioridade para mulheres e para quem fatura menos. A lei também perdoa as dívidas do MEI com o governo federal, para quem pagar a guia em dia por 6 meses, e sobe o limite de faturamento de R$ 81 mil para R$ 110 mil em 2027 e R$ 140 mil em 2028.",
+  outro:"Especialistas ouvidos pelo Estadão apontam custo alto para as contas públicas, e uma economista chamou as medidas de \"eleitoreiras de custo fiscal elevadíssimo\". Por causa da lei eleitoral, ninguém recebe o dinheiro em 2026.",
+  vinte2:"Flávio criticou o PixMEI: \"Ele acha que o povo é otário\". Comparou a medida ao mensalão, dizendo que ela \"pode comprar o voto das pessoas\", e promete, no lugar, cortar impostos e burocracia.",
+  fontes:[
+   ["Agência Brasil","21/10/2026","Perdão de dívidas e novo teto do MEI: entenda o que muda","https://agenciabrasil.ebc.com.br/economia/noticia/2026-10/perdao-de-dividas-e-novo-teto-do-mei-entenda-o-que-muda"],
+   ["Exame","13/10/2026","Flávio Bolsonaro critica Pix para MEI anunciado por Lula: 'Ele acha que o povo é otário'","https://exame.com/brasil/flavio-bolsonaro-critica-pix-para-mei-anunciado-por-lula-ele-acha-que-o-povo-e-otario/"],
+   ["Money Times (Estadão Conteúdo)","17/10/2026","'Prospera MEI' tem saldo positivo, mas acende alerta fiscal e eleitoral, dizem especialistas","https://www.moneytimes.com.br/prospera-mei-tem-saldo-positivo-mas-especialistas-alertam-para-risco-fiscal-igdl/"]
+  ]
+ },
+ bets:{
+  cat:"propostas", t:"Proibição das bets", l13:"sim",
+  p:"Você concorda em proibir os sites e aplicativos de apostas pela internet, as bets?",
+  pratica:"Bets são sites e aplicativos de aposta pelo celular. Muitas famílias se endividaram com elas.",
+  quem:"Governo Lula",
+  selo:"Medida provisória · Congresso ainda vota",
+  fato:"Em 25/09/2026, Lula proibiu as apostas de quota fixa no país, as esportivas e os jogos on-line, por medida provisória (lei que vale na hora, mas cai se o Congresso não aprovar). Os sites saíram do ar em 06/10 e o saldo dos apostadores foi devolvido. O Congresso tem até 23/11 para confirmar.",
+  outro:"As bets foram legalizadas em 2018, no governo Temer, e regulamentadas pelo próprio governo Lula em 2023. Zema e Renan Santos apoiam a proibição, mas a chamam de eleitoreira. As empresas do setor foram ao STF.",
+  vinte2:"Flávio diz que \"o cassino on-line tem que acabar\", mas defende as apostas esportivas. Ele chamou a proibição de agressão à segurança jurídica e chamou Lula de \"pai do tigrinho\".",
+  fontes:[
+   ["Agência Brasil","25/09/2026","Bets passam a ser proibidas no país e apostador receberá saldo","https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/mp-proibe-bets-no-brasil-e-determina-devolucao-de-saldo-ao-apostador"],
+   ["Correio Braziliense","23/09/2026","Flávio Bolsonaro defende bets esportivas e promete acabar com cassinos on-line","https://www.correiobraziliense.com.br/politica/2026/09/7506782-flavio-bolsonaro-defende-bets-esportivas-e-promete-acabar-com-cassinos-on-line.html"],
+   ["Jornal do Comércio","07/10/2026","Flávio Bolsonaro diz que proibição às bets é agressão à segurança jurídica","https://www.jornaldocomercio.com/politica/2026/10/1266152-flavio-bolsonaro-diz-que-proibicao-as-bets-e-agressao-a-seguranca-juridica.html"],
+   ["Poder360","26/09/2026","Zema e Renan dizem que proibição das bets de Lula é medida eleitoreira","https://www.poder360.com.br/poder-eleicoes-2026/zema-e-renan-dizem-que-proibicao-das-bets-de-lula-e-medida-eleitoreira/"]
+  ]
+ },
+ clima:{
+  cat:"ambiente", t:"Desmatamento da Amazônia", l13:"compara",
+  comp:"No papel, os dois candidatos prometem acabar com o desmatamento ilegal. Mas no governo Jair a derrubada da floresta aumentou; quem cumpriu e reduziu foi Lula.",
+  grafico:{
+   tit:"Floresta derrubada na Amazônia por ano (km²)",
+   barras:[[2019,10129,"22"],[2020,10851,"22"],[2021,13038,"22"],[2022,11594,"22"],[2023,9064,"13"],[2024,6518,"13"],[2025,5731,"13"],[2026,3335,"13"]],
+   destaque:[2022,2026],
+   nota:"Fonte: INPE/PRODES, 16/10/2026. O ano do INPE vai de agosto a julho: 2019 inclui 5 meses do governo Temer e 2023, 5 meses do governo Jair. 2026 é estimativa."
+  },
+  p:"Você acha importante que o desmatamento da Amazônia continue caindo?",
+  pratica:"O INPE, instituto federal de pesquisas espaciais, mede por satélite quanta floresta foi derrubada na Amazônia a cada ano, de agosto a julho.",
+  quem:"Governos Jair Bolsonaro e Lula",
+  selo:"Dado oficial do INPE",
+  fato:"Em 2022, último ano do governo Jair Bolsonaro, foram derrubados 11.594 km² de floresta na Amazônia. Em 2026, a estimativa do INPE é de 3.335 km², o menor número desde o início da medição, em 1988: queda de 71%. O Cerrado também teve o menor desmatamento desde 2001.",
+  outro:"O número de 2026 ainda é estimativa. O ano do INPE vai de agosto a julho, então 2023 inclui 5 meses do governo Jair. O dado mede floresta derrubada inteira, não queimadas.",
+  vinte2:"O plano de Flávio promete \"zerar o desmatamento ilegal até 2029, retomando e levando até o fim o compromisso que já assumimos no Governo Bolsonaro\", e fortalecer a fiscalização. No governo Jair, o desmatamento ficou entre 10 mil e 13 mil km² por ano.",
+  fontes:[
+   ["Agência Brasil (Radioagência Nacional)","16/10/2026","Inpe: desmatamento na Amazônia atinge menor nível de série histórica","https://agenciabrasil.ebc.com.br/radioagencia-nacional/meio-ambiente/audio/2026-10/inpe-desmatamento-na-amazonia-atinge-menor-nivel-de-serie-historica"],
+   ["Portal Amazônia","17/10/2026","Queda de 41,8%: Inpe detalha menor taxa de desmatamento da série histórica na Amazônia","https://portalamazonia.com/meio-ambiente/queda-desmatamento-amazonia-inpe/"],
+   ["Plano de governo de Flávio Bolsonaro (cópia do registrado no TSE)","2026","Página 58: meio ambiente","https://planodegoverno2026.com.br/planos/flavio-bolsonaro-0a34723b.pdf"]
+  ]
+ },
+ milicia:{
+  cat:"crime", t:"Milícia e Comando Vermelho",
+  p:"Você votaria em quem homenageou um chefe de milícia e indicou um aliado citado pela PF por troca de favores com o Comando Vermelho?",
+  pratica:"Milícia é grupo armado, geralmente com policiais e ex-policiais, que domina bairros no Rio e cobra \"taxa\" de morador e comerciante. O Comando Vermelho é a maior facção do tráfico do Rio.",
+  quem:"Flávio Bolsonaro",
+  selo:"Confirmado pelo candidato + mensagens da PF",
+  fato:"Milícia: quando era deputado estadual, Flávio deu uma moção de louvor (2003) e a Medalha Tiradentes (2005) a Adriano da Nóbrega, que o Ministério Público do Rio apontou como chefe do Escritório do Crime, um grupo de matadores de aluguel. A mãe e a ex-mulher de Adriano trabalharam no gabinete de Flávio. Ele confirmou isso no Jornal Nacional, em 28/08/2026. Comando Vermelho: mensagens analisadas pela PF mostram uma suposta troca de favores entre o Índio do Lixão, apontado como um dos chefes do CV, e Gutemberg Fonseca, ex-secretário do governo do Rio indicado para o cargo por Flávio em 2023. As conversas falam de pedidos de emprego no governo e de uma reunião marcada no Procon.",
+  outro:"Flávio diz que, na época, Adriano era um policial exemplar preso injustamente. Ele nunca foi acusado de fazer parte de milícia e não é investigado no caso do Comando Vermelho. A assessoria diz que ele combate facções há 20 anos e promete tratar CV e PCC como terroristas.",
+  treze:"O Aos Fatos checou como falso que PCC e Comando Vermelho tenham declarado apoio a Lula.",
+  fontes:[
+   ["NSC Total","28/08/2026","Flávio justifica homenagem a miliciano Adriano da Nóbrega","https://www.nsctotal.com.br/?p=8023793"],
+   ["Poder360","25/05/2026","Mensagens mostram troca de favores entre traficante e aliado de Flávio","https://www.poder360.com.br/poder-seguranca-publica/mensagens-mostram-troca-de-favores-entre-traficante-e-aliado-de-flavio/"],
+   ["Aos Fatos","09/10/2026","É falso que PCC e CV declararam apoio a Lula","https://aosfatos.org/noticias/pcc-comando-vermelho-apoio-lula-falso/"]
+  ]
+ },
+ tarifaco:{
+  cat:"eua", t:"Agradeceu a Trump pelo tarifaço",
+  p:"Você concorda com um político agradecer a Trump pelo tarifaço contra o Brasil?",
+  pratica:"Tarifa é um imposto extra que os EUA cobram sobre o que o Brasil vende para lá, como café, carne e suco de laranja. Com 50% a mais, fica mais difícil vender, e quem perde são as empresas e os trabalhadores daqui.",
+  quem:"Flávio Bolsonaro",
+  selo:"Post público",
+  fato:"Em 9 de julho de 2025, umas seis horas depois de Trump anunciar a tarifa de 50%, Flávio escreveu no X \"Thank you President Trump\" (obrigado, presidente Trump) e pediu a Lei Magnitsky, uma punição dos EUA. Três semanas depois, os EUA aplicaram essa lei contra o ministro do STF Alexandre de Moraes.",
+  outro:"Na sabatina do Jornal Nacional, em 2026, Flávio disse que o irmão Eduardo errou ao agradecer, sem citar o próprio post. Ele diz que depois atuou contra as tarifas e culpa o governo Lula por elas.",
+  video:{t:"Revelando, ep. 6: Pátria Submissa",u:"https://www.youtube.com/watch?v=F0aBW8GcAtE",d:"Episódio com Wagner Moura sobre EUA e terras raras. O minuto exato ainda não foi marcado."},
+  fontes:[
+   ["SBT News","29/08/2026","Flávio também agradeceu a Trump por tarifas em 2025","https://sbtnews.sbt.com.br/noticia/politica/flavio-tambem-agradeceu-a-trump-por-tarifas-em-2025"]
+  ]
+ },
+ pf:{
+  cat:"crime", t:"Pai pediu para não investigar o filho",
+  p:"Você acha certo um presidente pedir ao ministro que comandava a Polícia Federal para não se meter na investigação contra o próprio filho?",
+  pratica:"É como o dono da empresa pedir ao gerente para não mexer na apuração que envolve o filho dele. O caso era a \"rachadinha\": quando o político fica com parte do salário dos funcionários do gabinete.",
+  quem:"Jair Bolsonaro, sobre o caso de Flávio",
+  selo:"Relato de Sergio Moro",
+  fato:"Num vídeo antigo, resgatado nesta semana, Sergio Moro, que era ministro da Justiça, conta que Jair Bolsonaro lhe disse para não atrapalhar, se não fosse ajudar, as investigações sobre Flávio. O caso das rachadinhas foi arquivado em 2022, depois que a Justiça anulou as provas por questão de forma, sem decidir se Flávio era culpado ou inocente. Em 2025, o ministro Gilmar Mendes negou reabrir o caso. Em setembro de 2026, Flávio disse que existia um \"grupo especial de Lula\" dentro da PF.",
+  outro:"É o relato de Moro, que hoje apoia Flávio. Jair sempre negou ter interferido na PF. Flávio diz que defende uma PF independente, que persiga criminosos e não adversários do governo.",
+  treze:"No governo Lula, a PF investiga a fraude do INSS, incluindo apurações sobre Lulinha, que nega envolvimento. Uma reportagem apontou que essa investigação travou por falta de policiais.",
+  fontes:[
+   ["Poder360","21/10/2026","Esquerda resgata vídeo de Moro sobre pedido de Bolsonaro para livrar Flávio","https://www.poder360.com.br/poder-eleicoes-2026/esquerda-resgata-video-de-moro-sobre-pedido-de-bolsonaro-para-livrar-flavio/"],
+   ["Gazeta do Povo","27/02/2025","Gilmar Mendes nega reabertura do caso das rachadinhas de Flávio","https://www.gazetadopovo.com.br/republica/gilmar-mendes-nega-reabertura-rachadinhas-flavio-bolsonaro/"],
+   ["Diario de Pernambuco","08/09/2026","Flávio sobre afastamento de diretor: grupo especial de Lula na PF desmascarado","https://www.diariodepernambuco.com.br/politica/2026/09/11723372-flavio-sobre-afastamento-de-diretor-grupo-especial-de-lula-na-pf-desmascarado.html"],
+   ["Gazeta do Povo","01/07/2026","Investigação sobre Careca do INSS e Lulinha trava na PF por falta de efetivo","https://www.gazetadopovo.com.br/republica/investigacao-careca-do-inss-lulinha-trava-na-pf/"]
+  ]
+ },
+ cnbb:{
+  cat:"fe", t:"Acusou bispos sem provas",
+  p:"Você acha certo um candidato acusar bispos da Igreja Católica, sem provas, de espalhar fake news?",
+  pratica:"A CNBB é a entidade que reúne os bispos católicos do Brasil. Acusar sem provas é dizer que alguém fez algo errado sem mostrar nada que comprove.",
+  quem:"Flávio Bolsonaro",
+  selo:"Declaração pública",
+  fato:"Em 27/09/2026, Flávio disse que gente dentro da CNBB ajudava o PT a espalhar uma notícia falsa. A CNBB negou e cobrou provas, e bispos reagiram. Em 03/10, uma paróquia em Bangu (RJ) encerrou a missa mais cedo por causa de um ato de campanha dele na porta da igreja.",
+  outro:"Circulou contra Flávio o boato de que ele queria tirar de Nossa Senhora Aparecida o título de padroeira. O Aos Fatos checou e é falso.",
+  treze:"Em 2022, o TSE mandou apagar publicações que ligavam Lula à perseguição de cristãos. O Aos Fatos também checou como falsos os posts atribuídos a Lula sobre fechar igrejas.",
+  fontes:[
+   ["Diario de Pernambuco","27/09/2026","Flávio Bolsonaro acusa integrantes da CNBB de espalhar fake news","https://www.diariodepernambuco.com.br/politica/2026/09/11725087-flavio-bolsonaro-acusa-integrantes-da-cnbb-de-espalhar-fake-news.html"],
+   ["DGABC","03/10/2026","Flávio Bolsonaro encerra último ato de campanha no Rio em frente a igreja","https://www.dgabc.com.br/Noticia/4350628/flavio-bolsonaro-encerra-ultimo-ato-de-campanha-no-rio-em-frente-a-igreja"],
+   ["Aos Fatos","26/09/2026","Boatos sobre Nossa Senhora Aparecida e Flávio repaginam narrativas falsas","https://www.aosfatos.org/noticias/boato-sobre-nossa-senhora-aparecida-e-flavio-retoma-narrativas-falsas-de-2018-e-2022/"],
+   ["NSC Total","04/10/2022","TSE manda apagar publicações que tentam ligar Lula à perseguição de cristãos","https://www.nsctotal.com.br/?p=2410418"]
+  ]
+ },
+ festas:{
+  cat:"master", t:"Festas com refugiadas pagas pelo Vorcaro",
+  p:"Você votaria em quem negociou dinheiro para o filme do pai com um banqueiro que, segundo mensagens da PF, pagava festas com jovens refugiadas que chamava de \"escravas\"?",
+  pratica:"Refugiadas são mulheres que fugiram de guerra ou de crise no país delas, como Ucrânia e Venezuela, e chegam aqui sem dinheiro e sem apoio.",
+  quem:"Daniel Vorcaro, patrocinador do filme de Flávio",
+  selo:"Mensagens da PF · inquérito aberto",
+  fato:"Mensagens do celular de Daniel Vorcaro, dono do Banco Master, reveladas pelo UOL a partir de um relatório da PF, mostram que ele organizava e pagava festas com mulheres para empresários e políticos desde pelo menos 2023. Ele preferia jovens refugiadas de até 20 anos, vindas de países como Ucrânia, Rússia e Venezuela. Nas conversas, ele e um promoter chamam as mulheres de \"escravas\", e Vorcaro escreve: \"Tem que sobrar alguma refugiada pra mim\". Numa festa em Londres, em 2024, com autoridades de Brasília, 99 mulheres foram levadas. Ele investiu pelo menos R$ 4,3 milhões no esquema, e a PF abriu inquérito em maio. É o mesmo banqueiro com quem Flávio negociou R$ 134 milhões para o filme sobre o pai.",
+  outro:"Não há registro de que Flávio tenha ido a essas festas. A defesa de Vorcaro não quis comentar o caso. Em outra ocasião, ele negou ter explorado ou desrespeitado mulheres.",
+  video:EP7,
+  fontes:[
+   ["O Tempo (com UOL)","13/10/2026","Vorcaro mantinha rede de prostituição com jovens refugiadas que ele chamava de escravas","https://www.otempo.com.br/politica/judiciario/2026/10/13/vorcaro-mantinha-rede-de-prostituicao-com-jovens-refugiadas-que-ele-chamava-de-escravas"],
+   ["Pipoca Moderna","20/10/2026","Porchat aborda tráfico de mulheres e negócios ocultos em novo vídeo sobre Flávio","https://pipocamoderna.com.br/2026/10/porchat-revelando-laranjas-flavio/"]
+  ]
+ },
+ lavagem:{
+  cat:"laranjas", t:"Investigado por lavagem de dinheiro",
+  p:"Você votaria num candidato investigado pela PF por lavagem de dinheiro?",
+  pratica:"Lavar dinheiro é fazer dinheiro de origem ilegal parecer limpo — por exemplo, usando empresas abertas fora do país (chamadas de offshores) para esconder quem é o verdadeiro dono da conta.",
+  quem:"Flávio Bolsonaro",
+  selo:"Inquérito da PF no STF",
+  fato:"A PF mandou ao STF, em 16/10, uma investigação contra Flávio e o advogado Willer Tomaz por lavagem de dinheiro e por mandar dinheiro escondido para fora do país. O relator é Alexandre de Moraes. Tomaz é suspeito no esquema que descontou dinheiro de aposentados do INSS sem autorização. Nos arquivos dele, apreendidos pela PF, Flávio aparece como \"usuário master\" da conta da Alcazar, uma offshore de Tomaz em Portugal. Para a PF, isso reforça a suspeita de que Flávio seja sócio escondido da empresa. A Alcazar era dona de um terço de um jatinho; outra parte era da empresa de Vorcaro. Outra empresa de Tomaz pagou voos de Flávio e da família pela Europa em 2025.",
+  outro:"Flávio nega ter tido conta com Tomaz e diz que um e-mail de 2025, pedindo para tirar o nome dele, prova que o vínculo era errado. Ele diz que a amizade com Tomaz é só pessoal. Tomaz nega sociedade e diz que pagou as viagens como passeio. A investigação não diz que o dinheiro dos voos veio do esquema do INSS.",
+  video:EP7,
+  fontes:[
+   ["Itatiaia","19/10/2026","PF investiga Flávio Bolsonaro e Willer Tomaz por crimes financeiros","https://www.itatiaia.com.br/politica/pf-investiga-flavio-bolsonaro-e-willer-tomaz-crimes-financeiros/"],
+   ["Times Brasil/CNBC (apuração de O Globo)","14/10/2026","PF aponta Flávio Bolsonaro como usuário master de conta de offshore ligada a Vorcaro","https://timesbrasil.com.br/brasil/pf-aponta-flavio-bolsonaro-como-usuario-master-de-conta-de-offshore-ligada-a-vorcaro/"],
+   ["SBT News","16/10/2026","Investigado por fraude no INSS bancou voos de Flávio","https://sbtnews.sbt.com.br/colunas/coluna-do-tulio/investigado-por-fraude-no-inss-bancou-voos-de-flavio"]
+  ]
+ },
+ laranja:{
+  cat:"laranjas", t:"\"Doméstica\" dona de 14 empresas",
+  p:"Você acharia normal uma mulher que disse ser doméstica aparecer como chefe de 14 empresas do advogado amigo de um candidato?",
+  pratica:"Laranja é quem empresta o nome para aparecer como dono de algo que não é dele, para esconder o dono de verdade da polícia ou da Receita.",
+  quem:"Willer Tomaz, amigo de Flávio Bolsonaro",
+  selo:"Indício · PF investiga",
+  fato:"Lídia Mazelli aparece como dirigente de pelo menos 14 empresas de Willer Tomaz, o advogado amigo de Flávio. Entre elas estão a dona de uma mansão de R$ 10 milhões em Angra dos Reis, de uma ilha anunciada por R$ 17 milhões e a empresa que processa pagamentos de sites de apostas no Rio. Procurada em setembro, ela disse que trabalhava como doméstica e não conhecia Tomaz. Segundo o ICL Notícias, a PF investiga se ela é laranja, e uma fonte da PF diz que tudo indica que sim.",
+  outro:"Depois da reportagem, Lídia disse que é formada em administração e foi gerente no grupo de Tomaz. A defesa dela e Tomaz negam que ela seja laranja. Flávio não comentou.",
+  video:EP7,
+  fontes:[
+   ["ICL Notícias","09/10/2026","PF investiga se \"empregada doméstica\" é laranja de advogado ligado a Flávio","https://iclnoticias.com.br/?p=131125"],
+   ["Pipoca Moderna","20/10/2026","Porchat aborda tráfico de mulheres e negócios ocultos em novo vídeo sobre Flávio","https://pipocamoderna.com.br/2026/10/porchat-revelando-laranjas-flavio/"]
+  ]
+ },
+ apostas:{
+  cat:"laranjas", t:"Amigo apostou quase R$ 5 bilhões",
+  p:"Você acha normal o amigo de um candidato movimentar R$ 130 milhões em 3 meses e apostar quase R$ 5 bilhões num site de apostas?",
+  pratica:"R$ 130 milhões em 3 meses é mais do que um trabalhador de salário mínimo ganharia em 6 mil anos. Apostar e \"ganhar\" em site de apostas é um dos jeitos de lavar dinheiro que a polícia investiga.",
+  quem:"Willer Tomaz, amigo de Flávio Bolsonaro",
+  selo:"Inquérito da PF",
+  fato:"Segundo trechos da investigação obtidos pela CNN, uma conta de Willer Tomaz movimentou cerca de R$ 130 milhões entre março e maio de 2025, valor que a PF considerou incompatível com o que ele declara ganhar. Um extrato da Blaze, site de apostas, mostra quase R$ 5 bilhões apostados por ele em 2025, com prejuízo de R$ 163 milhões. A PF investiga se ele usou as apostas para lavar dinheiro. Tomaz também foi alvo de busca na investigação da fraude contra aposentados do INSS.",
+  outro:"Tomaz nega irregularidades e diz que o valor apostado é alto porque os ganhos eram apostados de novo. Ele processa a Blaze dizendo ser viciado em jogo. Flávio diz que a amizade com ele é pessoal.",
+  video:EP7,
+  fontes:[
+   ["CNN Brasil","10/2026","Advogado amigo de Flávio movimentou R$ 130 milhões em três meses, diz PF","https://www.cnnbrasil.com.br/politica/advogado-amigo-de-flavio-movimentou-r-130-milhoes-em-tres-meses-diz-pf/"],
+   ["SBT News","30/09/2026","PF apura apostas de R$ 4,8 bi de advogado amigo de Flávio","https://sbtnews.sbt.com.br/colunas/coluna-do-tulio/pf-apura-apostas-de-r-4-8-bi-de-advogado-amigo-de-flavio"]
+  ]
+ },
+ mansao:{
+  cat:"laranjas", t:"Mansão emprestada em Angra",
+  p:"Você acha normal um candidato usar de graça uma mansão em Angra ligada a um banqueiro preso (Vorcaro) e a um amigo investigado pela PF?",
+  pratica:"É como ganhar estadia de luxo de graça de alguém que está sendo investigado pela polícia, numa casa administrada pela empresa de um banqueiro preso.",
+  quem:"Flávio Bolsonaro",
+  selo:"Confirmado pelo dono da cota",
+  fato:"Em fevereiro, Flávio comemorou o aniversário da filha mais nova numa mansão em Angra dos Reis (RJ). A casa é administrada pela Prime You, empresa da qual Vorcaro foi sócio até 2025, e uma das quatro partes é da empresa de Willer Tomaz, que confirmou ter emprestado o imóvel sem cobrar nada. Flávio também usou na campanha um apartamento de Tomaz em São Paulo.",
+  outro:"Tomaz diz que emprestou por amizade e nega ligação com Vorcaro. A assessoria de Flávio não respondeu à reportagem.",
+  video:EP7,
+  fontes:[
+   ["ICL Notícias, via TVT","08/09/2026","Flávio fez aniversário da filha em mansão gerida por empresa ligada a Vorcaro","https://tvtnews.com.br/?p=801975"],
+   ["SBT News","30/09/2026","PF apura apostas de R$ 4,8 bi de advogado amigo de Flávio (cita o apartamento em SP)","https://sbtnews.sbt.com.br/colunas/coluna-do-tulio/pf-apura-apostas-de-r-4-8-bi-de-advogado-amigo-de-flavio"]
+  ]
+ },
+ filme:{
+  cat:"master", t:"R$ 134 milhões para o filme do pai",
+  p:"Você acha aceitável um candidato negociar R$ 134 milhões com um banqueiro hoje preso para um filme sobre o pai?",
+  pratica:"R$ 134 milhões dariam para pagar o salário mínimo de uns 82 mil trabalhadores por um mês.",
+  quem:"Flávio Bolsonaro",
+  selo:"Investigado pela PF",
+  fato:"Segundo o Intercept, Flávio negociou com Daniel Vorcaro, dono do Banco Master, um repasse de US$ 24 milhões (R$ 134 milhões) para o filme Dark Horse, sobre Jair Bolsonaro. Documentos mostram pelo menos US$ 10,6 milhões pagos em 2025. A PF investiga o caso no STF, com Flávio entre os investigados. Vorcaro está preso desde março.",
+  outro:"Flávio diz que o filme é privado, sem dinheiro público, e nega ter recebido dinheiro ou oferecido vantagens a Vorcaro.",
+  treze:"Lula recebeu Vorcaro em dezembro de 2024, fora da agenda oficial, num encontro articulado por Guido Mantega, que foi consultor do Master. Políticos do Centrão também aparecem na rede de Vorcaro.",
+  video:{t:"Revelando, ep. 2: Grandes Igrejas, Master Negócios",u:"https://www.youtube.com/watch?v=DJ-YAXhDkhY&t=480s",d:"Abre em 08:00, no capítulo \"Vorcaro e Flávio Bolsonaro\"."},
+  fontes:[
+   ["Intercept Brasil, via Bem Paraná","13/05/2026","Flávio pediu R$ 134 milhões a Vorcaro para filme de Bolsonaro","https://www.bemparana.com.br/noticias/politica/flavio-pediu-r-134-milhoes-a-vorcaro-para-filme-de-bolsonaro-afirma-intercept/"],
+   ["Folha de Pernambuco","16/10/2026","PF pede mais 90 dias para investigar Dark Horse","https://www.folhape.com.br/politica/pf-pede-mais-90-dias-para-investigar-dark-horse/518933/"],
+   ["Gazeta do Povo","07/03/2026","Do Planalto ao Centrão: quem são os políticos na teia de Vorcaro","https://www.gazetadopovo.com.br/republica/do-planalto-ao-centrao-quem-sao-os-politicos-na-teia-de-vorcaro/"]
+  ]
+ },
+ mentiras:{
+  cat:"master", t:"Dizia não conhecer, chamava de \"irmãozão\"",
+  p:"Você confia em quem disse não conhecer o banqueiro do rombo de R$ 50 bilhões, mas nas mensagens o chamava de \"irmãozão\"?",
+  pratica:"O Banco Master quebrou e deixou um buraco que o fundo de garantia dos bancos teve de cobrir: mais de R$ 50 bilhões, o mesmo que uns 30 milhões de salários mínimos. O dono do banco, Daniel Vorcaro, está preso.",
+  quem:"Flávio Bolsonaro",
+  selo:"Checagem · 43 declarações falsas",
+  fato:"O Aos Fatos, agência que confere o que políticos de todos os partidos dizem, contou pelo menos 43 declarações falsas de Flávio sobre Vorcaro. Alguns exemplos: em março, ele disse que não conhecia o banqueiro; em maio, vieram a público mensagens em que ele chama Vorcaro de \"irmão\" e \"irmãozão\", e os dois se encontraram pessoalmente pelo menos duas vezes. Em 13 de maio, ele disse que as mensagens eram mentira e, na mesma noite, gravou um vídeo confirmando que eram verdadeiras. Ele disse que o último pagamento de Vorcaro para o filme foi em maio de 2025, mas um relatório do Coaf, órgão que vigia movimentações suspeitas, mostra uma transferência em setembro de 2025. O Banco Master foi fechado pelo Banco Central em novembro de 2025, e Vorcaro está preso desde março.",
+  outro:"Flávio afirma que só buscou patrocínio privado para o filme e defendeu a criação da CPI do Banco Master.",
+  fontes:[
+   ["Aos Fatos","24/09/2026","Flávio mentiu ao menos 43 vezes sobre elo com Vorcaro","https://www.aosfatos.org/noticias/flavio-mentiu-ao-menos-43-vezes-sobre-envolvimento-com-vorcaro/"],
+   ["Aos Fatos","18/05/2026","É falso que PF concluiu que não há crime em mensagens de Flávio e Vorcaro","https://www.aosfatos.org/noticias/pf-crime-mensagens-flavio-vorcaro/"]
+  ]
+ },
+ kassio:{
+  cat:"master", t:"Noitada para ministro do STF",
+  p:"Você acha normal um banqueiro organizar uma noitada com garotas de programa para um ministro do STF?",
+  pratica:"O STF é o tribunal mais alto do país. É ele que dá a palavra final nos processos mais importantes, inclusive os de banqueiros e de políticos.",
+  quem:"Kassio Nunes Marques, ministro indicado por Jair Bolsonaro",
+  selo:"Mensagens reveladas pela piauí",
+  fato:"A revista piauí teve acesso a 125 mensagens do celular de Vorcaro. Elas mostram o banqueiro organizando a visita do ministro Kassio Nunes Marques ao apartamento dele em São Paulo, na sexta de Carnaval de 2025, com garotas de programa combinadas com uma agenciadora, além de motorista, chef e mordomo, ao custo de cerca de R$ 27 mil. Kassio foi indicado ao STF por Jair Bolsonaro, em 2020. Naquele mesmo dia, o Banco Master já estava ficando sem dinheiro em caixa.",
+  outro:"Kassio diz que nunca trocou mensagens com Vorcaro nem pediu nada a ele, e que votou para manter o banqueiro preso. Flávio não aparece nessas mensagens.",
+  fontes:[
+   ["Estadão, via O Liberal (com piauí)","16/10/2026","Vorcaro coordenou noitada em tríplex para ministro do STF Kassio Nunes Marques","https://www.oliberal.com/politica/vorcaro-coordenou-noitada-em-triplex-para-ministro-do-stf-kassio-nunes-marques-diz-revista-1.1183162"]
+  ]
+ },
+ terras:{
+  cat:"eua", t:"Terras raras processadas aqui", l13:"sim",
+  p:"Você acha que as terras raras do Brasil devem ser processadas aqui, gerando emprego, em vez de oferecidas aos EUA?",
+  pratica:"Terras raras são minerais usados em celular, carro elétrico e arma. Quem controla a extração e o processamento ganha muito dinheiro e poder.",
+  quem:"Governo Lula e Flávio Bolsonaro",
+  selo:"Declaração pública",
+  fato:"Numa conferência conservadora nos EUA (CPAC), em março de 2026, Flávio disse que o Brasil pode ser a solução para os EUA dependerem menos da China em terras raras.",
+  outro:"O plano de governo de Flávio prevê dinheiro estrangeiro com o governo fiscalizando e o processamento dos minerais feito no Brasil. Ele diz que quer negociar com EUA e China, exigindo que eles passem a tecnologia.",
+  treze:"O governo Lula recusou entrar na aliança de Trump sobre esses minerais e defende processar tudo no país, com participação do Estado.",
+  video:{t:"Revelando, ep. 6: Pátria Submissa",u:"https://www.youtube.com/watch?v=F0aBW8GcAtE",d:"Episódio com Wagner Moura sobre EUA e terras raras. O minuto exato ainda não foi marcado."},
+  fontes:[
+   ["InfoMoney/Agência O Globo","10/04/2026","Base governista reage a fala de Flávio e prepara contraproposta sobre terras raras","https://www.infomoney.com.br/?p=3287272"],
+   ["eixos","08/02/2026","Governo Lula descarta entrar em aliança de Trump sobre minerais críticos","https://eixos.com.br/internacional/governo-lula-descarta-entrar-em-alianca-de-trump-sobre-minerais-criticos/"],
+   ["Times Brasil/CNBC","13/10/2026","Minerais críticos e terras raras: o que propõem Lula e Flávio","https://timesbrasil.com.br/eleicoes-2026/minerais-criticos-terras-raras-lula-flavio-bolsonaro-estado/"]
+  ]
+ },
+ privat:{
+  cat:"eua", t:"Correios e estatais públicos", l13:"sim",
+  p:"Você acha que os Correios e as outras empresas do governo devem continuar sendo do governo?",
+  pratica:"Vender uma empresa do governo para empresas particulares se chama privatizar.",
+  quem:"Governo Lula e Flávio Bolsonaro",
+  selo:"Plano de governo",
+  fato:"O plano de Flávio retoma o programa de privatizações, decidindo empresa por empresa, e ele já defendeu privatizar os Correios. No governo Jair Bolsonaro, a refinaria RLAM (da Petrobras na Bahia) foi vendida a um fundo dos Emirados Árabes em 2021. Em 2024, a CGU, órgão que fiscaliza o governo, concluiu que ela foi vendida abaixo do preço de mercado.",
+  outro:"A campanha diz que não vai privatizar Petrobras, Banco do Brasil nem Caixa. Em 2021, o TCU não viu irregularidade no preço da RLAM.",
+  treze:"Lula e o PT são contra privatizar a Petrobras e os Correios. A crítica ao governo dele é o prejuízo recorde das estatais.",
+  fontes:[
+   ["O Globo, via Tribuna do Sertão","21/09/2026","Petrobras, Correios e BB: a visão dos presidenciáveis sobre as estatais","https://tribunadosertao.com.br/financas/2026/09/21/982853-petrobras-correios-e-bb-a-visao-dos-presidenciaveis-sobre-as-estatais"],
+   ["eixos","08/10/2026","Sachsida diz que Flávio Bolsonaro não vai privatizar a Petrobras","https://eixos.com.br/politica/eleicoes/eleicoes-2026/sachsida-diz-que-flavio-bolsonaro-nao-vai-privatizar-a-petrobras/"],
+   ["Gazeta do Povo","05/01/2024","Petrobras investiga venda de refinaria a fundo árabe no governo Bolsonaro","https://www.gazetadopovo.com.br/economia/petrobras-investiga-venda-de-refinaria-a-fundo-arabe-no-governo-bolsonaro/"]
+  ]
+ },
+ armas:{
+  cat:"crime", t:"Regras rígidas para armas", l13:"sim",
+  p:"Você é a favor de manter o Estatuto do Desarmamento, com regras rígidas para ter e andar com arma?",
+  pratica:"Hoje, para ter arma em casa, é preciso provar que precisa e seguir regras da PF. A proposta é afrouxar essas regras.",
+  quem:"Aliados de Flávio Bolsonaro",
+  selo:"Proposta de aliados",
+  fato:"Aliados de Flávio planejam derrubar o Estatuto do Desarmamento e aprovar uma nova lei de armas a partir de 2027. Na TV Globo, em 16/10, Flávio disse que o Estatuto precisa ser aperfeiçoado. Em 2019, um decreto de Jair Bolsonaro liberou o tiro esportivo para crianças e adolescentes sem autorização de um juiz.",
+  outro:"O plano de governo registrado no TSE não fala de armas para civis.",
+  treze:"O decreto de Lula de 2023 voltou a exigir autorização de juiz para menores e proibiu o tiro esportivo antes dos 14 anos. O STF manteve as regras dele.",
+  fontes:[
+   ["Gazeta do Povo","07/08/2026","Fim do Estatuto do Desarmamento: Flávio Bolsonaro planeja nova lei de armas","https://www.gazetadopovo.com.br/republica/quem-planeja-o-fim-do-estatuto-do-desarmamento-no-brasil/"],
+   ["SBT News","17/10/2026","Flávio defende mudanças no Estatuto do Desarmamento","https://sbtnews.sbt.com.br/noticia/eleicoes/flavio-defende-mudancas-no-estatuto-do-desarmamento"],
+   ["Jornal de Brasília","08/05/2019","Decreto autoriza crianças e adolescentes a praticar tiro desportivo sem aval judicial","https://jornaldebrasilia.com.br/noticias/politica-e-poder/decreto-autoriza-criancas-e-adolescentes-a-praticar-tiro-desportivo-sem-aval-judicial/"],
+   ["Planalto","21/07/2023","Decreto nº 11.615","https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/decreto/d11615.htm"]
+  ]
+ },
+ salario:{
+  cat:"bolso", t:"Salário mínimo sem aumento real",
+  lados:[["Governo Lula · já fez",["Aumento acima da inflação todo ano, de até 2,5%","Salário mínimo de 2026: R$ 1.621"]],
+         ["Governo Jair · já fez",["2020 a 2022: só a inflação, nenhum aumento real","Flávio hoje promete aumento real"]]],
+  p:"Você acha justo o salário mínimo passar anos sem aumento acima da inflação?",
+  pratica:"Se tudo no mercado sobe 5% e o salário também sobe 5%, você compra a mesma coisa de antes. Aumento real é quando o salário sobe mais que os preços e dá para comprar mais.",
+  quem:"Governo Jair Bolsonaro (PL)",
+  selo:"Histórico do governo Jair",
+  fato:"De 2020 a 2022, no governo Jair Bolsonaro, o salário mínimo só acompanhou a inflação, sem aumento real. Em agosto de 2026, o Estadão noticiou que Flávio evitaria falar de salário mínimo na campanha.",
+  outro:"Na entrevista de 16/10, Flávio prometeu reajuste acima da inflação.",
+  treze:"Com Lula, a regra voltou a ser inflação mais o crescimento da economia, com aumento real de até 2,5% ao ano. O mínimo de 2026 é R$ 1.621.",
+  fontes:[
+   ["Cecon/Unicamp","out/2022","O poder de compra do salário mínimo dos governos Lula a Bolsonaro","https://www.eco.unicamp.br/noticias/o-poder-de-compra-do-salario-minimo-dos-governos-lula-a-bolsonaro-nota-do-cecon-n-18"],
+   ["Estadão, via Diário do Nordeste","26/08/2026","Flávio evitará tratar de salário mínimo em campanha","https://diariodonordeste.verdesmares.com.br/pontopoder/flavio-bolsonaro-evitara-tratar-de-salario-minimo-em-campanha-sob-temor-de-repetir-2022-1.3787173"],
+   ["Estadão, via O Liberal","16/10/2026","Flávio diz que não vai desvincular reajuste do mínimo","https://www.oliberal.com/politica/flavio-diz-que-nao-vai-desvincular-reajuste-do-minimo-e-nem-alterar-pisos-de-saude-e-educacao-1.1183567"],
+   ["BBC News Brasil, via O Povo","05/01/2026","Salário mínimo 2026 começa a valer","https://www.opovo.com.br/agencia/bbc/2026/01/05/salario-minimo-2026-comeca-a-valer-qual-o-valor-com-novo-reajuste.html"]
+  ]
+ },
+ aposentadoria:{
+  cat:"bolso", t:"Aposentadoria sem aumento real",
+  lados:[["Governo Lula",["Mantém o BPC e as aposentadorias de 1 salário mínimo subindo junto com o mínimo"]],
+         ["Equipe de Flávio · em estudo",["Corrigir aposentadorias e BPC só pela inflação","Parte de um pacote de cortes de R$ 250 bilhões","Flávio nega"]]],
+  p:"Você acha justo que aposentadorias e o BPC parem de subir junto com o salário mínimo?",
+  pratica:"O BPC é o salário mínimo pago a idosos e pessoas com deficiência de baixa renda. Hoje, quando o mínimo sobe, o BPC e muitas aposentadorias sobem junto.",
+  quem:"Equipe econômica de Flávio",
+  selo:"Reportagem · candidato nega",
+  fato:"Segundo a Folha, a equipe econômica de Flávio estudou corrigir aposentadorias e o BPC só pela inflação, sem o aumento real do salário mínimo, dentro de um pacote de cortes de cerca de R$ 250 bilhões.",
+  outro:"Flávio nega e diz que não vai separar os benefícios do salário mínimo. A campanha diz que a ideia não está no plano registrado.",
+  treze:"O Comprova checou que o governo Lula não vai acabar com o aumento das aposentadorias do INSS.",
+  fontes:[
+   ["Folha, via Diario de Pernambuco","08/10/2026","Flávio considera limitar reajuste de aposentadorias e BPC","https://www.diariodepernambuco.com.br/politica/2026/10/11726164-flavio-considera-limitar-reajuste-de-aposentadorias-e-bpc.html"],
+   ["Estadão, via O Liberal","16/10/2026","Flávio diz que não vai desvincular reajuste do mínimo","https://www.oliberal.com/politica/flavio-diz-que-nao-vai-desvincular-reajuste-do-minimo-e-nem-alterar-pisos-de-saude-e-educacao-1.1183567"],
+   ["SBT News/Comprova","03/09/2026","Governo não vai acabar com aumento de aposentadorias do INSS","https://sbtnews.sbt.com.br/noticia/politica/governo-nao-vai-acabar-com-aumento-de-aposentadorias-do-inss"]
+  ]
+ },
+ farmacia:{
+  cat:"bolso", t:"Corte no Farmácia Popular",
+  lados:[["Governo Lula · já fez",["Desde fevereiro de 2025, os 41 itens do programa são de graça"]],
+         ["Governo Jair · já fez",["Em 2022, propôs cortar cerca de 59% da verba do programa","Flávio hoje promete manter e ampliar"]]],
+  p:"Você concorda em cortar mais da metade da verba do Farmácia Popular?",
+  pratica:"O Farmácia Popular dá remédio de graça para pressão alta, diabetes e asma em farmácias comuns do bairro.",
+  quem:"Governo Jair Bolsonaro (PL)",
+  selo:"Histórico do governo Jair",
+  fato:"Em 2022, o governo Jair Bolsonaro propôs cortar cerca de 59% da verba do Farmácia Popular para 2023. Depois da repercussão, mandou desfazer o corte.",
+  outro:"Em 2026, Flávio promete manter e ampliar o programa. O Aos Fatos checou como falso que ele tenha anunciado o fim do Farmácia Popular.",
+  treze:"Em fevereiro de 2025, o governo Lula tornou gratuitos todos os 41 itens do programa.",
+  fontes:[
+   ["Estadão Conteúdo, via Mercado&Consumo","14/09/2022","Corte no orçamento da Farmácia Popular atinge 13 medicamentos","https://mercadoeconsumo.com.br/14/09/2022/estadao-conteudo/corte-no-orcamento-da-farmacia-popular-atinge-13-medicamentos/"],
+   ["Aos Fatos","08/10/2026","Flávio Bolsonaro não anunciou que vai acabar com o Farmácia Popular","https://www.aosfatos.org/noticias/flavio-bolsonaro-farmacia-popular/"],
+   ["Poder360","13/02/2025","Governo anuncia gratuidade dos 41 medicamentos no Farmácia Popular","https://www.poder360.com.br/poder-saude/governo-anuncia-gratuidade-dos-41-medicamentos-no-farmacia-popular/"]
+  ]
+ },
+ univ:{
+  cat:"bolso", t:"Universidades no MEC", l13:"sim",
+  p:"Você acha que as universidades federais devem continuar no Ministério da Educação, com verba mínima garantida?",
+  pratica:"Por lei, o governo é obrigado a gastar um valor mínimo com educação. Com ciência, não. Se as universidades saem da Educação, essa garantia de dinheiro pode sumir.",
+  quem:"Flávio Bolsonaro",
+  selo:"Plano de governo",
+  fato:"O plano de Flávio passa as universidades federais do Ministério da Educação para o Ministério da Ciência e Tecnologia. Reitores temem perder verba, porque a educação tem um gasto mínimo garantido na Constituição e a ciência não.",
+  outro:"Flávio diz que não vai mexer no gasto mínimo de saúde e educação.",
+  fontes:[
+   ["Folha, via Mais Goiás","13/10/2026","Plano de Flávio de tirar universidades do MEC gera incerteza","https://www.maisgoias.com.br/politica/plano-de-flavio-de-tirar-universidades-do-mec-gera-incerteza/"],
+   ["Estadão, via O Liberal","16/10/2026","Flávio diz que não vai alterar pisos de saúde e educação","https://www.oliberal.com/politica/flavio-diz-que-nao-vai-desvincular-reajuste-do-minimo-e-nem-alterar-pisos-de-saude-e-educacao-1.1183567"]
+  ]
+ }
+};
+
+/* "Todas": dos temas mais leves aos mais pesados, para a pessoa não desistir logo no começo */
+const ORDEM = ["cesta","irricos","jornada","mei","bets","clima","salario","farmacia","aposentadoria","univ","privat","terras","tarifaco","armas","cnbb","pf","mentiras","filme","mansao","apostas","laranja","lavagem","kassio","milicia","festas"];
+const NUM = Object.fromEntries(ORDEM.map((id,k)=>[id,k+1]));
+const CATNOME = Object.fromEntries(CATS.map(c=>[c.id,c.nome]));
+
+let filtro = "todas";
+let lista = ORDEM.slice();
+let pos = 0;
+const resp = {};      // id -> "sim" | "nao"
+const vistos = {};    // id -> true quando as provas foram abertas
+const perfil = {};    // id do campo de PERFIL -> valor
+let doResultado = false;  // abriu a pergunta pela lista do resultado: "Próxima" volta para lá
+let curto = false;        // quiz completo encurtado para 3 perguntas (voto no 13): no fim vai para o plano pra domingo
+const $ = id => document.getElementById(id);
+/* l13: a resposta que leva ao 13 ("nao" se omitido). "compara": os dois lados prometem algo parecido,
+   então a pergunta só mostra o que cada um fez e não conta para nenhum lado */
+const conta = id => { const l = BASE[id].l13 || "nao"; return !resp[id] || l === "compara" ? null : resp[id] === l ? "13" : "22"; };
+const leva13 = id => conta(id) === "13";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+
+function montarChips(){
+  const itens = [{id:"todas",nome:"Todas",n:ORDEM.length}].concat(CATS.map(c=>({id:c.id,nome:c.nome,n:ORDEM.filter(q=>BASE[q].cat===c.id).length})));
+  $("chips").innerHTML = itens.map(c=>`<button class="chip" type="button" data-cat="${c.id}" aria-pressed="${c.id===filtro}">${esc(c.nome)}<small>${c.n}</small></button>`).join("");
+}
+function montarIndice(){
+  const atual = lista[pos];
+  const grupos = CATS.map(c => {
+    const qs = ORDEM.filter(q => BASE[q].cat === c.id);
+    return `<h3>${esc(c.nome)}</h3><ol>${qs.map(q => {
+      const r = resp[q];
+      const st = r ? `<span class="st ok">${r==="sim"?"Sim":"Não"}</span>` : (vistos[q] ? `<span class="st">vista</span>` : `<span class="st"></span>`);
+      return `<li class="${q===atual?"atual":""}"><button type="button" data-q="${q}"><span class="n">${String(NUM[q]).padStart(2,"0")}</span><span>${esc(BASE[q].t)}</span>${st}</button></li>`;
+    }).join("")}</ol>`;
+  }).join("");
+  $("indice").innerHTML = grupos;
+}
+function montarPerfil(){
+  $("perfilCampos").innerHTML = PERFIL.map(c => {
+    const oculto = c.se && perfil[c.se[0]] !== c.se[1];
+    const corpo = c.texto
+      ? `<input class="campo" id="pf_${c.id}" type="text" autocomplete="off" enterkeyhint="done" aria-label="${esc(c.rot)}" placeholder="Ex.: Porto Alegre" value="${esc(perfil[c.id]||"")}">`
+      : `<div class="opcoes">${c.ops.map(o => `<button type="button" class="op" data-campo="${c.id}" data-valor="${esc(o)}" aria-pressed="${perfil[c.id]===o}">${esc(o)}</button>`).join("")}</div>`;
+    return `<fieldset class="grupo"${oculto?" hidden":""}><legend>${esc(c.rot)}</legend>${corpo}</fieldset>`;
+  }).join("");
+  /* Avisa antes de começar quando o voto informado muda o tamanho do quiz completo */
+  const v = lerVoto();
+  const aviso = modo !== "completo" ? ""
+    : v.lula ? "Como ela já vota no 13, o quiz terá só 3 perguntas e depois o plano pra domingo. No fim dá para continuar com as outras."
+    : v.outro ? "Pelo voto informado, as perguntas sobre escândalos ficam de fora. No resultado dá para abrir as que faltaram, se ela quiser."
+    : "";
+  $("avisoPerfil").hidden = !aviso;
+  $("avisoPerfil").textContent = aviso;
+}
+function tela(id){
+  TELAS.forEach(t => { $(t).hidden = t !== id; });
+  $("nav").hidden = id !== "cardQ";
+  document.body.classList.toggle("em-inicio", id === "inicio");
+}
+function mostrarPerfil(){ montarPerfil(); tela("perfilCard"); }
+function iniciarModo(){
+  if (modo === "rua") tela("triagem");
+  else {
+    filtro = "todas"; montarChips();
+    lista = ordemPorPerfil(); pos = 0;
+    curto = lerVoto().lula;
+    render();
+  }
+  window.scrollTo(0,0);
+}
+function mostrarTemas(){
+  const leves = triagem === "nenhum" || lerVoto().outro;
+  const ordem = ordemPorPerfil();
+  const posTema = t => Math.min(...t.qs.map(q => { const i = ordem.indexOf(q); return i < 0 ? 99 : i; }));
+  const temas = Object.keys(perfil).length ? TEMAS.slice().sort((a, b) => posTema(a) - posTema(b)) : TEMAS;
+  $("cardsTemas").innerHTML = temas.filter(t => !leves || t.leve)
+    .map(t => `<button type="button" data-tema="${t.id}" aria-pressed="${temasVistos.includes(t.nome)}">${esc(t.nome)}</button>`).join("");
+  $("temasNota").textContent = leves
+    ? "Toque no tema que ela disser. Aqui, só temas do dia a dia: nada de escândalo."
+    : "Toque no tema que ela disser.";
+  $("btnTerminar").hidden = !Object.keys(resp).length && !temasVistos.length;
+  tela("temas"); window.scrollTo(0,0);
+}
+function escolherTema(tid){
+  const t = TEMAS.find(x => x.id === tid);
+  if (!temasVistos.includes(t.nome)) temasVistos.push(t.nome);
+  lista = t.qs.slice(); pos = 0;
+  render(); window.scrollTo(0,0);
+}
+/* variante: "plano" (padrão), "decidida" (só link), "22" (só agradecer) */
+function fimRua(variante){
+  $("fimRuaTit").textContent = variante === "22" ? "Obrigada pela conversa! Bom domingo." : "Pra levar";
+  $("temasLevar").hidden = !temasVistos.length || variante === "22";
+  $("temasLevar").textContent = "O que importa pra você: " + temasVistos.join(", ") + ".";
+  $("linhaFixa").hidden = variante === "22";
+  $("planoBox").hidden = variante !== "plano";
+  $("qrBox").hidden = variante === "22";
+  $("boatoBox").hidden = variante === "22";
+  $("notaCurto").hidden = $("btnContinuar").hidden = modo !== "completo";
+  tela("fimRua"); window.scrollTo(0,0);
+}
+/* Sai do quiz curto (ou do resultado) e segue pelas perguntas ainda sem resposta, na ordem misturada */
+function continuarTodas(){
+  doResultado = false;
+  setFiltro("todas", intercalar(ORDEM).find(q => !resp[q]));
+  window.scrollTo(0,0);
+}
+function resumoPerfil(){
+  const p = ["idade","genero","escola"].filter(k => perfil[k]).map(k => perfil[k]);
+  if (perfil.municipio && perfil.municipio.trim()) p.push("vota em " + perfil.municipio.trim());
+  const turno = (k, quem, nao) => perfil[k]==="Sim" ? (perfil[quem] || "sim") : perfil[k]==="Não" ? nao : "prefere não dizer";
+  if (perfil.t1) p.push("1º turno: " + turno("t1","t1quem","não votou"));
+  if (perfil.t2) p.push("2º turno: " + turno("t2","t2quem","ainda sem voto decidido"));
+  return p.join(" · ");
+}
+function setFiltro(cat, manter){
+  filtro = cat; curto = false;
+  lista = intercalar(cat === "todas" ? ORDEM : ORDEM.filter(q => BASE[q].cat === cat));
+  if (manter && lista.includes(manter)) pos = lista.indexOf(manter); else pos = 0;
+  montarChips(); render();
+}
+function irPara(id){
+  if (!lista.includes(id)) setFiltro("todas", id);
+  else { pos = lista.indexOf(id); render(); }
+  fecharIndice();
+  $("cardQ").scrollIntoView({block:"start"});
+}
+function fecharIndice(){ $("indice").hidden = true; $("btnLista").setAttribute("aria-expanded","false"); }
+
+function render(){
+  const id = lista[pos], q = BASE[id];
+  tela("cardQ");
+  const rua = modo === "rua";
+  $("pratica").hidden = rua && !praticaAberta[id];
+  $("btnPratica").hidden = !rua || !!praticaAberta[id];
+  $("catNome").textContent = CATNOME[q.cat];
+  $("posicao").textContent = `${pos+1} de ${lista.length}`;
+  $("pergunta").textContent = q.p;
+  $("praticaTxt").textContent = q.pratica;
+  const feitas = ORDEM.filter(k => resp[k]).length;
+  $("contador").textContent = `${feitas}/${ORDEM.length} respondidas`;
+  const r = resp[id];
+  $("btnSim").setAttribute("aria-pressed", r==="sim");
+  $("btnNao").setAttribute("aria-pressed", r==="nao");
+  $("btnVer").hidden = !!r || !!vistos[id];
+  $("btnRevelar").hidden = !r || !!vistos[id];
+  $("btnVoltar").disabled = pos === 0;
+  $("btnProx").textContent = doResultado ? "Voltar ao resultado"
+    : pos < lista.length-1 ? "Próxima"
+    : rua ? "Outro tema ou terminar"
+    : curto ? "Terminar" : "Ver resultado";
+  if (vistos[id]) mostrar(id); else $("revela").hidden = true;
+  if (!$("indice").hidden) montarIndice();
+}
+function mostrar(id){
+  const q = BASE[id];
+  if (resp[id] && !conta(id)){
+    $("urna").hidden = false;
+    $("urna").innerHTML = `<div class="quem"><small>Nesta pergunta</small><span>${esc(q.comp)}</span></div>`;
+  } else if (resp[id]){
+    $("urna").hidden = false;
+    $("urna").innerHTML = leva13(id)
+      ? `<div class="num"><b>1</b><b>3</b></div><div class="quem"><small>Você ficou com</small><span>Lula</span><small>Nº 13 · PT</small></div>`
+      : `<div class="num"><b>2</b><b>2</b></div><div class="quem"><small>Você ficou com</small><span>Flávio Bolsonaro</span><small>Nº 22 · PL</small></div>`;
+  } else $("urna").hidden = true;
+  $("curto").hidden = !CURTO[id];
+  $("curto").textContent = CURTO[id] || "";
+  $("detalhes").hidden = !detalhesAbertos[id];
+  $("btnDetalhes").hidden = !!detalhesAbertos[id];
+  $("graficoBox").hidden = !q.grafico;
+  if (q.grafico) $("graficoBox").innerHTML = desenharGrafico(q.grafico);
+  /* q.lados: [[título do lado 13, [itens]], [título do lado 22, [itens]]] */
+  $("ladosBox").hidden = !q.lados;
+  if (q.lados) $("ladosBox").innerHTML = `<h4>Lado a lado</h4>` + q.lados.map((l, i) =>
+    `<div class="lado ${i ? "l22" : "l13"}"><b>${esc(l[0])}</b><ul>${l[1].map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
+  $("ligado").textContent = q.quem;
+  $("selo").textContent = q.selo;
+  $("fato").textContent = q.fato;
+  $("outroBox").hidden = !q.outro;
+  $("outro").textContent = q.outro || "";
+  /* "treze": o que pesa contra o 13 nas perguntas sobre o 22; "vinte2": o que diz o 22 nas perguntas sobre propostas do 13 */
+  const contra = q.treze ? ["13", q.treze] : q.vinte2 ? ["22", q.vinte2] : null;
+  $("trezeBox").hidden = !contra;
+  if (contra){ $("contraNum").textContent = contra[0]; $("treze").textContent = contra[1]; }
+  if (q.video){
+    $("videoBox").hidden = false;
+    $("videoBox").innerHTML = `<span class="play" aria-hidden="true"></span><div><a href="${esc(q.video.u)}" target="_blank" rel="noopener">${esc(q.video.t)}</a><p>${esc(q.video.d)}</p></div>`;
+  } else $("videoBox").hidden = true;
+  $("fontes").innerHTML = q.fontes.map(f => `<li><a href="${esc(f[3])}" target="_blank" rel="noopener">${esc(f[2])}</a><span class="meta">${esc(f[0])} · ${esc(f[1])}</span></li>`).join("");
+  $("revela").hidden = false;
+}
+/* g.barras: [ano, valor, "22"|"13"]; g.destaque: anos com o número escrito em cima da coluna */
+function desenharGrafico(g){
+  const max = Math.max(...g.barras.map(b => b[1]));
+  const fmt = n => n.toLocaleString("pt-BR");
+  const rotulo = l => l === "22" ? "Governo Jair Bolsonaro" : "Governo Lula";
+  const desc = g.barras.map(b => `${b[0]}: ${fmt(b[1])} km² (${rotulo(b[2])})`).join("; ");
+  return `<figcaption class="g-tit">${esc(g.tit)}</figcaption>
+    <div class="g-leg"><span><i class="g-sw g22"></i>Governo Jair Bolsonaro</span><span><i class="g-sw g13"></i>Governo Lula</span></div>
+    <div><div class="g-barras" role="img" aria-label="${esc(g.tit)}. ${esc(desc)}">${g.barras.map(b =>
+      `<div class="g-col" title="${b[0]}: ${fmt(b[1])} km² · ${rotulo(b[2])}">${g.destaque.includes(b[0]) ? `<span class="g-val">${(b[1]/1000).toFixed(1).replace(".", ",")}<small>mil</small></span>` : ""}<div class="g-bar g${b[2]}" style="height:${(b[1]/max*100).toFixed(1)}%"></div></div>`).join("")}</div>
+    <div class="g-anos">${g.barras.map(b => `<span>${b[0]}</span>`).join("")}</div></div>
+    <p class="g-nota">${esc(g.nota)}</p>`;
+}
+function responder(v){
+  resp[lista[pos]] = v;   // dá para trocar a resposta tocando no outro botão
+  render();
+}
+function fim(){
+  tela("final");
+  const respondidas = ORDEM.filter(k => resp[k]);
+  const contadas = respondidas.filter(conta);
+  const total = contadas.length, n13 = contadas.filter(leva13).length;
+  $("placarUrna").hidden = !total;
+  $("placarUrna").innerHTML = `<div class="num"><b>1</b><b>3</b></div><div class="quem"><small>Você ficou com o 13 em</small><span>${n13} de ${total}</span></div>`;
+  $("placarTxt").textContent = !total ? `Nenhuma pergunta respondida ainda. Toque em "Lista" para escolher por onde começar.`
+    : n13*2 > total ? `Na maioria das perguntas, você ficou do lado do 13.`
+    : n13*2 === total ? `Em metade das perguntas, você ficou do lado do 13.`
+    : `Você ficou do lado do 13 em ${n13} de ${total} perguntas.`;
+  const resumo = resumoPerfil();
+  $("perfilResumo").hidden = !resumo;
+  $("perfilResumo").textContent = resumo ? "Perfil: " + resumo : "";
+  $("explicaBox").hidden = !respondidas.length;
+  $("explica").innerHTML = respondidas.map(q => {
+    const c = conta(q), r = resp[q]==="sim" ? "Sim" : "Não";
+    const tag = c ? `<span class="tag ${c==="13"?"t13":"t22"}">${r} → ${c}</span>` : `<span class="tag t22">${r} · compare</span>`;
+    return `<li><button type="button" data-q="${q}"><span class="n">${String(NUM[q]).padStart(2,"0")}</span><span>${esc(BASE[q].t)}</span>${tag}</button></li>`;
+  }).join("");
+  const faltam = ORDEM.length - respondidas.length;
+  $("btnFaltam").hidden = !faltam || !respondidas.length;
+  $("btnFaltam").textContent = `Continuar com as ${faltam} perguntas sem resposta`;
+}
+function novaPessoa(){
+  for (const k in resp) delete resp[k];
+  for (const k in vistos) delete vistos[k];
+  for (const k in perfil) delete perfil[k];
+  for (const k in praticaAberta) delete praticaAberta[k];
+  for (const k in detalhesAbertos) delete detalhesAbertos[k];
+  temasVistos.length = 0; triagem = null; doResultado = false; curto = false;
+  filtro = "todas"; lista = ORDEM.slice(); pos = 0; montarChips();
+  fecharIndice(); document.body.classList.remove("rua");
+  tela("inicio"); window.scrollTo(0,0);
+}
+/* "Nova pessoa" apaga tudo: o primeiro toque só pede confirmação */
+let confirmaTimer = null;
+function pedirNovaPessoa(btn){
+  if (btn.dataset.confirma){ clearTimeout(confirmaTimer); delete btn.dataset.confirma; btn.textContent = btn.dataset.texto; novaPessoa(); return; }
+  btn.dataset.texto = btn.textContent; btn.dataset.confirma = "1"; btn.textContent = "Toque de novo para apagar";
+  confirmaTimer = setTimeout(() => { delete btn.dataset.confirma; btn.textContent = btn.dataset.texto; }, 3000);
+}
+
+$("chips").addEventListener("click", e => { const b = e.target.closest("[data-cat]"); if (b){ doResultado = false; setFiltro(b.dataset.cat); } });
+$("indice").addEventListener("click", e => { const b = e.target.closest("[data-q]"); if (b){ doResultado = false; irPara(b.dataset.q); } });
+$("explica").addEventListener("click", e => {
+  const b = e.target.closest("[data-q]"); if (!b) return;
+  vistos[b.dataset.q] = true; doResultado = true; irPara(b.dataset.q);
+});
+$("perfilCampos").addEventListener("click", e => {
+  const b = e.target.closest("[data-campo]"); if (!b) return;
+  const c = b.dataset.campo, v = b.dataset.valor;
+  if (perfil[c] === v) delete perfil[c]; else perfil[c] = v;
+  PERFIL.forEach(p => { if (p.se && perfil[p.se[0]] !== p.se[1]) delete perfil[p.id]; });
+  montarPerfil();
+});
+$("perfilCampos").addEventListener("input", e => { if (e.target.id === "pf_municipio") perfil.municipio = e.target.value; });
+$("btnComecar").addEventListener("click", iniciarModo);
+/* Pular: começa sem perfil, mesmo que algum campo já tenha sido tocado */
+$("btnPular").addEventListener("click", () => { for (const k in perfil) delete perfil[k]; iniciarModo(); });
+$("inicio").addEventListener("click", e => {
+  const b = e.target.closest("[data-modo]"); if (!b) return;
+  modo = b.dataset.modo;
+  document.body.classList.toggle("rua", modo === "rua");
+  if (modo === "completo") mostrarPerfil(); else iniciarModo();
+  window.scrollTo(0,0);
+});
+$("opTriagem").addEventListener("click", e => {
+  const b = e.target.closest("[data-t]"); if (!b) return;
+  triagem = b.dataset.t;
+  if (triagem === "decidida") fimRua("decidida");
+  else if (triagem === "22") fimRua("22");
+  else if (triagem === "13") fimRua("plano");
+  else mostrarTemas();
+});
+$("cardsTemas").addEventListener("click", e => { const b = e.target.closest("[data-tema]"); if (b) escolherTema(b.dataset.tema); });
+$("btnTerminar").addEventListener("click", () => fimRua("plano"));
+$("btnIr").addEventListener("click", () => fimRua(triagem === "22" ? "22" : "plano"));
+$("btnPratica").addEventListener("click", () => { praticaAberta[lista[pos]] = true; render(); });
+$("btnDetalhes").addEventListener("click", () => { detalhesAbertos[lista[pos]] = true; render(); });
+$("btnRecomecarRua").addEventListener("click", e => pedirNovaPessoa(e.currentTarget));
+$("btnContinuar").addEventListener("click", continuarTodas);
+$("btnFaltam").addEventListener("click", continuarTodas);
+$("btnLista").addEventListener("click", () => {
+  const abrir = $("indice").hidden;
+  if (abrir){ montarIndice(); $("indice").hidden = false; $("btnLista").setAttribute("aria-expanded","true"); }
+  else fecharIndice();
+});
+$("btnSim").addEventListener("click", () => responder("sim"));
+$("btnNao").addEventListener("click", () => responder("nao"));
+$("btnVer").addEventListener("click", () => { vistos[lista[pos]] = true; render(); });
+$("btnRevelar").addEventListener("click", () => { vistos[lista[pos]] = true; render(); $("urna").scrollIntoView({block:"center", behavior:"smooth"}); });
+$("btnProx").addEventListener("click", () => {
+  if (doResultado){ fim(); window.scrollTo(0,0); }
+  else if (pos < lista.length-1){ pos++; render(); $("cardQ").scrollIntoView({block:"start"}); }
+  else if (modo === "rua") mostrarTemas();
+  else if (curto) fimRua("plano");
+  else fim();
+});
+$("btnVoltar").addEventListener("click", () => { if (pos>0){ pos--; render(); } });
+$("btnNova").addEventListener("click", e => pedirNovaPessoa(e.currentTarget));
+$("btnRecomecar").addEventListener("click", e => pedirNovaPessoa(e.currentTarget));
+
+montarChips();
+render();
+tela("inicio");
+</script>
+
+</body></html>
