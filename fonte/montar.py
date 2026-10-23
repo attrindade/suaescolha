@@ -69,10 +69,12 @@ rodape = """
 </footer>
 <script>
 $("btnCompartilhar").addEventListener("click", async () => {
-  const dados = {title:"Sua escolha muda o cenário", text:"24 perguntas de sim ou não, cada uma com fonte, para te ajudar a decidir e para conversar com indecisos no 2º turno:", url:"https://suaescolha.pages.dev/?v=3"};
-  if (navigator.share) { try { await navigator.share(dados); } catch(e){} return; }
-  try { await navigator.clipboard.writeText(dados.url); $("avisoCompartilhar").textContent = "Link copiado."; }
-  catch(e){ $("avisoCompartilhar").textContent = dados.url; }
+  /* Link na primeira linha e dentro do texto (sem "url" à parte, que o Android cola no fim):
+     no WhatsApp a prévia abre a mensagem */
+  const msg = "https://suaescolha.pages.dev/?v=3\\n\\nAinda pensando no voto do 2º turno? São 24 perguntas de sim ou não, cada uma com fonte, para te ajudar a decidir e para conversar com indecisos. Nada do que você responde é gravado.";
+  if (navigator.share) { try { await navigator.share({text: msg}); } catch(e){} return; }
+  try { await navigator.clipboard.writeText(msg); $("avisoCompartilhar").textContent = "Mensagem copiada. É só colar no WhatsApp."; }
+  catch(e){ $("avisoCompartilhar").textContent = msg; }
 });
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>{});
 </script>
