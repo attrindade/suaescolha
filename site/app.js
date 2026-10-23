@@ -816,7 +816,7 @@ tela("inicio");
 ;
 
 $("btnCompartilhar").addEventListener("click", async () => {
-  const dados = {title:"Sua escolha muda o cenário", text:"20 perguntas de sim ou não, cada uma com fonte, para te ajudar a decidir e para conversar com indecisos no 2º turno:", url:"https://suaescolha.pages.dev/"};
+  const dados = {title:"Sua escolha muda o cenário", text:"20 perguntas de sim ou não, cada uma com fonte, para te ajudar a decidir e para conversar com indecisos no 2º turno:", url:"https://suaescolha.pages.dev/?v=2"};
   if (navigator.share) { try { await navigator.share(dados); } catch(e){} return; }
   try { await navigator.clipboard.writeText(dados.url); $("avisoCompartilhar").textContent = "Link copiado."; }
   catch(e){ $("avisoCompartilhar").textContent = dados.url; }
