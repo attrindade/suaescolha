@@ -229,7 +229,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="eyebrow"><span>Nova conversa</span></div>
     <h2 class="pergunta" id="inicioTit">Como vai ser a conversa?</h2>
     <button class="modo principal" type="button" data-modo="rua"><b>Modo rua</b><span>2 a 5 minutos. A pessoa escolhe o tema e responde de 1 a 3 perguntas.</span></button>
-    <button class="modo" type="button" data-modo="completo"><b>Quiz completo</b><span>Até 25 perguntas, com resultado no fim. Com o perfil, a ordem e a quantidade se ajustam à pessoa.</span></button>
+    <button class="modo" type="button" data-modo="completo"><b>Quiz completo</b><span>Até 24 perguntas, com resultado no fim. Com o perfil, a ordem e a quantidade se ajustam à pessoa.</span></button>
   </section>
 
   <section class="card" id="triagem" hidden aria-labelledby="triagemTit">
@@ -368,7 +368,7 @@ const TEMAS = [
 ];
 /* Ordem pelo perfil. O voto decide se os escândalos aparecem; a idade e o gênero decidem quais temas vêm primeiro.
    Regras combinadas com a coordenação em 22/10; sem perfil preenchido, vale a ORDEM padrão */
-const ESCANDALOS = ["cnbb","pf","mentiras","filme","mansao","apostas","laranja","lavagem","kassio","milicia","festas"];
+const ESCANDALOS = ["cnbb","pf","mentiras","filme","mansao","apostas","laranja","lavagem","kassio","milicia"];
 const PRIO_IDADE = {
   "16 a 17 anos":["jornada","bets","univ","clima"], "18 a 24 anos":["jornada","bets","univ","clima"],
   "25 a 34 anos":["jornada","salario","irricos","mei","cesta"], "35 a 44 anos":["jornada","salario","irricos","mei","cesta"],
@@ -418,16 +418,15 @@ const CURTO = {
   tarifaco:"Flávio agradeceu a Trump no dia em que ele anunciou a tarifa de 50% contra produtos brasileiros.",
   armas:"Aliados de Flávio querem derrubar o Estatuto do Desarmamento. Lula endureceu as regras de armas em 2023.",
   cnbb:"Flávio acusou bispos da CNBB de espalhar fake news, sem mostrar provas.",
-  pf:"Segundo Sergio Moro, Jair pediu para a PF não atrapalhar a investigação sobre o filho Flávio.",
+  pf:"Segundo Sergio Moro, quando uma decisão judicial travou a investigação sobre Flávio, Jair pediu que ele não agisse contra ela: \"Moro, se você não vai ajudar, não atrapalhe\".",
   mentiras:"Flávio dizia não conhecer o dono do Banco Master. Nas mensagens, chamava ele de \"irmãozão\".",
-  filme:"Flávio negociou R$ 134 milhões com o banqueiro do Master, hoje preso, para o filme sobre o pai.",
+  filme:"Isso é a Lei Rouanet. O filme sobre Jair foi pelo outro caminho: Flávio negociou R$ 134 milhões com um banqueiro hoje preso, que, segundo a PF, pagava festas com jovens refugiadas.",
   mansao:"Flávio usou de graça uma mansão em Angra ligada a Daniel Vorcaro (dono preso do Banco Master) e a um advogado amigo investigado pela PF.",
   apostas:"O advogado amigo de Flávio movimentou R$ 130 milhões em 3 meses e apostou quase R$ 5 bilhões, diz a PF.",
   laranja:"Uma mulher que disse ser doméstica aparece como chefe de 14 empresas do advogado amigo de Flávio. A PF investiga.",
   lavagem:"A PF investiga Flávio no STF por lavagem de dinheiro: ele aparece como dono da senha geral (\"usuário master\") da conta de uma empresa em Portugal ligada a um investigado na fraude do INSS.",
   kassio:"O banqueiro do Master organizou uma noitada com garotas de programa para Kassio Nunes Marques, ministro indicado por Jair.",
-  milicia:"Flávio homenageou um chefe de milícia e indicou um aliado citado pela PF por suposta troca de favores com o CV.",
-  festas:"Segundo a PF, o banqueiro que bancou o filme de Flávio pagava festas com jovens refugiadas."
+  milicia:"Flávio homenageou um chefe de milícia e indicou um aliado citado pela PF por suposta troca de favores com o CV."
 };
 const detalhesAbertos = {};
 const TELAS = ["inicio","perfilCard","triagem","temas","cardQ","fimRua","final"];
@@ -575,7 +574,7 @@ const BASE = {
   pratica:"É como o dono da empresa pedir ao gerente para não mexer na apuração que envolve o filho dele. O caso era a \"rachadinha\": quando o político fica com parte do salário dos funcionários do gabinete.",
   quem:"Jair Bolsonaro, sobre o caso de Flávio",
   selo:"Relato de Sergio Moro",
-  fato:"Num vídeo antigo, resgatado nesta semana, Sergio Moro, que era ministro da Justiça, conta que Jair Bolsonaro lhe disse para não atrapalhar, se não fosse ajudar, as investigações sobre Flávio. O caso das rachadinhas foi arquivado em 2022, depois que a Justiça anulou as provas por questão de forma, sem decidir se Flávio era culpado ou inocente. Em 2025, o ministro Gilmar Mendes negou reabrir o caso. Em setembro de 2026, Flávio disse que existia um \"grupo especial de Lula\" dentro da PF.",
+  fato:"Numa entrevista de 2022, resgatada nesta semana, Sergio Moro, que era ministro da Justiça, conta que em 2019 uma decisão do ministro Dias Toffoli, do STF, travou por cerca de quatro meses a investigação das rachadinhas de Flávio. Moro queria que o ministério agisse contra a decisão, mas Jair não queria que se mexesse nisso e lhe disse: \"Moro, se você não vai ajudar, não atrapalhe\". O caso das rachadinhas foi arquivado em 2022, depois que a Justiça anulou as provas por questão de forma, sem decidir se Flávio era culpado ou inocente. Em 2025, o ministro Gilmar Mendes negou reabrir o caso. Em setembro de 2026, Flávio disse que existia um \"grupo especial de Lula\" dentro da PF.",
   outro:"É o relato de Moro, que hoje apoia Flávio. Jair sempre negou ter interferido na PF. Flávio diz que defende uma PF independente, que persiga criminosos e não adversários do governo.",
   treze:"No governo Lula, a PF investiga a fraude do INSS, incluindo apurações sobre Lulinha, que nega envolvimento. Uma reportagem apontou que essa investigação travou por falta de policiais.",
   fontes:[
@@ -599,20 +598,6 @@ const BASE = {
    ["DGABC","03/10/2026","Flávio Bolsonaro encerra último ato de campanha no Rio em frente a igreja","https://www.dgabc.com.br/Noticia/4350628/flavio-bolsonaro-encerra-ultimo-ato-de-campanha-no-rio-em-frente-a-igreja"],
    ["Aos Fatos","26/09/2026","Boatos sobre Nossa Senhora Aparecida e Flávio repaginam narrativas falsas","https://www.aosfatos.org/noticias/boato-sobre-nossa-senhora-aparecida-e-flavio-retoma-narrativas-falsas-de-2018-e-2022/"],
    ["NSC Total","04/10/2022","TSE manda apagar publicações que tentam ligar Lula à perseguição de cristãos","https://www.nsctotal.com.br/?p=2410418"]
-  ]
- },
- festas:{
-  cat:"master", t:"Festas com refugiadas pagas pelo Vorcaro",
-  p:"Você votaria em quem negociou dinheiro para o filme do pai com um banqueiro que, segundo mensagens da PF, pagava festas com jovens refugiadas que chamava de \"escravas\"?",
-  pratica:"Refugiadas são mulheres que fugiram de guerra ou de crise no país delas, como Ucrânia e Venezuela, e chegam aqui sem dinheiro e sem apoio.",
-  quem:"Daniel Vorcaro, patrocinador do filme de Flávio",
-  selo:"Mensagens da PF · inquérito aberto",
-  fato:"Mensagens do celular de Daniel Vorcaro, dono do Banco Master, reveladas pelo UOL a partir de um relatório da PF, mostram que ele organizava e pagava festas com mulheres para empresários e políticos desde pelo menos 2023. Ele preferia jovens refugiadas de até 20 anos, vindas de países como Ucrânia, Rússia e Venezuela. Nas conversas, ele e um promoter chamam as mulheres de \"escravas\", e Vorcaro escreve: \"Tem que sobrar alguma refugiada pra mim\". Numa festa em Londres, em 2024, com autoridades de Brasília, 99 mulheres foram levadas. Ele investiu pelo menos R$ 4,3 milhões no esquema, e a PF abriu inquérito em maio. É o mesmo banqueiro com quem Flávio negociou R$ 134 milhões para o filme sobre o pai.",
-  outro:"Não há registro de que Flávio tenha ido a essas festas. A defesa de Vorcaro não quis comentar o caso. Em outra ocasião, ele negou ter explorado ou desrespeitado mulheres.",
-  video:EP7,
-  fontes:[
-   ["O Tempo (com UOL)","13/10/2026","Vorcaro mantinha rede de prostituição com jovens refugiadas que ele chamava de escravas","https://www.otempo.com.br/politica/judiciario/2026/10/13/vorcaro-mantinha-rede-de-prostituicao-com-jovens-refugiadas-que-ele-chamava-de-escravas"],
-   ["Pipoca Moderna","20/10/2026","Porchat aborda tráfico de mulheres e negócios ocultos em novo vídeo sobre Flávio","https://pipocamoderna.com.br/2026/10/porchat-revelando-laranjas-flavio/"]
   ]
  },
  lavagem:{
@@ -673,17 +658,23 @@ const BASE = {
   ]
  },
  filme:{
-  cat:"master", t:"R$ 134 milhões para o filme do pai",
-  p:"Você acha aceitável um candidato negociar R$ 134 milhões com um banqueiro hoje preso para um filme sobre o pai?",
-  pratica:"R$ 134 milhões dariam para pagar o salário mínimo de uns 82 mil trabalhadores por um mês.",
-  quem:"Flávio Bolsonaro",
+  cat:"master", t:"Rouanet ou banqueiro preso?", l13:"sim",
+  p:"Você acha certo um filme ser feito assim: o artista vai atrás de patrocínio de empresas, o projeto é aprovado antes, a empresa desconta parte do imposto e, no fim, o artista tem que mostrar onde gastou cada real?",
+  pratica:"Descontar do imposto é a empresa pagar menos imposto de renda no valor que deu para a cultura, até um limite pequeno do que ela deve.",
+  quem:"A Lei Rouanet, de 1991. O filme sobre Jair: Flávio Bolsonaro, com dinheiro de Vorcaro",
   selo:"Investigado pela PF",
-  fato:"Segundo o Intercept, Flávio negociou com Daniel Vorcaro, dono do Banco Master, um repasse de US$ 24 milhões (R$ 134 milhões) para o filme Dark Horse, sobre Jair Bolsonaro. Documentos mostram pelo menos US$ 10,6 milhões pagos em 2025. A PF investiga o caso no STF, com Flávio entre os investigados. Vorcaro está preso desde março.",
-  outro:"Flávio diz que o filme é privado, sem dinheiro público, e nega ter recebido dinheiro ou oferecido vantagens a Vorcaro.",
+  fato:"O que você acabou de responder é como funciona a Lei Rouanet, de 1991. O governo não entrega dinheiro na mão do artista: o projeto é aprovado pelo Ministério da Cultura, o artista vai atrás de patrocínio e a empresa desconta parte do imposto de renda. Quem não presta contas ou gasta errado tem que devolver o dinheiro e fica 3 anos sem poder captar. Ter projeto aprovado também não é receber: em 2023, foram aprovados cerca de R$ 16 bilhões e captados R$ 2,3 bilhões. Sobre o filme Dark Horse, sobre Jair Bolsonaro, Flávio disse em nota: \"Zero de dinheiro público. Zero de lei Rouanet\". O filme foi por outro caminho: segundo o Intercept, Flávio negociou com Daniel Vorcaro, dono do Banco Master, preso desde março, US$ 24 milhões (R$ 134 milhões), e pelo menos US$ 10,6 milhões foram pagos em 2025. Flávio prometeu prestar contas em 30 dias; em agosto, disse: \"Não sou eu que tenho que prestar conta, é Lula\". Um laudo pago pela produtora diz que o filme custou R$ 75 milhões, sem recibos nem notas fiscais. A dona da produtora, aliás, tentou captar R$ 8,6 milhões pela Rouanet para outros projetos entre 2015 e 2019, e conseguiu R$ 107 mil. E mensagens do celular de Vorcaro, reveladas pelo UOL a partir de um relatório da PF, mostram que ele pagava festas com jovens refugiadas, que ele e um promoter chamavam de \"escravas\"; a PF abriu inquérito em maio. A PF investiga o filme no STF, com Flávio entre os investigados.",
+  outro:"Flávio diz que o filme é privado, sem dinheiro público, nega ter recebido dinheiro ou oferecido vantagens a Vorcaro e diz que a produtora já prestou contas num inquérito da Polícia Civil de São Paulo. Não há registro de que Flávio tenha ido às festas; Vorcaro já negou ter explorado ou desrespeitado mulheres.",
   treze:"Lula recebeu Vorcaro em dezembro de 2024, fora da agenda oficial, num encontro articulado por Guido Mantega, que foi consultor do Master. Políticos do Centrão também aparecem na rede de Vorcaro.",
   video:{t:"Revelando, ep. 2: Grandes Igrejas, Master Negócios",u:"https://www.youtube.com/watch?v=DJ-YAXhDkhY&t=480s",d:"Abre em 08:00, no capítulo \"Vorcaro e Flávio Bolsonaro\"."},
   fontes:[
+   ["Comprova, via Diário do Nordeste","12/09/2024","Há diferença entre os valores que são aprovados e os que são captados por projetos via Lei Rouanet","https://diariodonordeste.verdesmares.com.br/projeto-comprova/ha-diferenca-entre-os-valores-que-sao-aprovados-e-os-que-sao-captados-por-projetos-via-lei-rouanet-1.3557248"],
+   ["Bahia Notícias","29/11/2016","MinC reprova contas de mais 3 projetos via Lei Rouanet; restituição ultrapassa R$ 750 mil","https://www.bahianoticias.com.br/cultura/noticia/26383-minc-reprova-contas-de-mais-3-projetos-via-lei-rouanet-restituicao-ultrapassa-rdollar-750-mil"],
+   ["BBC News Brasil, via O Povo","27/05/2026","De \"baixíssimo orçamento\" a milhões pedidos a Vorcaro: os bastidores do filme sobre Bolsonaro (nota de Flávio)","https://www.opovo.com.br/agencia/bbc/2026/05/27/de-baixissimo-orcamento-a-milhoes-pedidos-a-vorcaro-os-bastidores-do-filme-sobre-bolsonaro.html"],
    ["Intercept Brasil, via Bem Paraná","13/05/2026","Flávio pediu R$ 134 milhões a Vorcaro para filme de Bolsonaro","https://www.bemparana.com.br/noticias/politica/flavio-pediu-r-134-milhoes-a-vorcaro-para-filme-de-bolsonaro-afirma-intercept/"],
+   ["Diário de Pernambuco","25/08/2026","Flávio Bolsonaro sobre Dark Horse: \"Não sou eu que tenho que prestar conta, é Lula\"","https://www.diariodepernambuco.com.br/politica/2026/08/11722184-flavio-bolsonaro-sobre-dark-horse-nao-sou-eu-que-tenho-que-prestar-conta-e-lula.html"],
+   ["Folha de S.Paulo, via Bahia Notícias","23/05/2026","Dona de produtora de filme sobre Bolsonaro buscou Lei Rouanet para projetos de R$ 8,6 milhões","https://www.bahianoticias.com.br/folha/noticia/393688-dona-de-produtora-de-filme-sobre-bolsonaro-buscou-lei-rouanet-para-projetos-de-r-86-milhoes"],
+   ["O Tempo (com UOL)","13/10/2026","Vorcaro mantinha rede de prostituição com jovens refugiadas que ele chamava de escravas","https://www.otempo.com.br/politica/judiciario/2026/10/13/vorcaro-mantinha-rede-de-prostituicao-com-jovens-refugiadas-que-ele-chamava-de-escravas"],
    ["Folha de Pernambuco","16/10/2026","PF pede mais 90 dias para investigar Dark Horse","https://www.folhape.com.br/politica/pf-pede-mais-90-dias-para-investigar-dark-horse/518933/"],
    ["Gazeta do Povo","07/03/2026","Do Planalto ao Centrão: quem são os políticos na teia de Vorcaro","https://www.gazetadopovo.com.br/republica/do-planalto-ao-centrao-quem-sao-os-politicos-na-teia-de-vorcaro/"]
   ]
@@ -828,7 +819,7 @@ const BASE = {
 };
 
 /* "Todas": dos temas mais leves aos mais pesados, para a pessoa não desistir logo no começo */
-const ORDEM = ["cesta","irricos","jornada","mei","bets","clima","salario","farmacia","aposentadoria","univ","privat","terras","tarifaco","armas","cnbb","pf","mentiras","filme","mansao","apostas","laranja","lavagem","kassio","milicia","festas"];
+const ORDEM = ["cesta","irricos","jornada","mei","bets","clima","salario","farmacia","aposentadoria","univ","privat","terras","tarifaco","armas","cnbb","pf","mentiras","filme","mansao","apostas","laranja","lavagem","kassio","milicia"];
 const NUM = Object.fromEntries(ORDEM.map((id,k)=>[id,k+1]));
 const CATNOME = Object.fromEntries(CATS.map(c=>[c.id,c.nome]));
 

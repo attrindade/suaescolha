@@ -31,8 +31,8 @@ head = f"""<!doctype html>
 <meta property="og:title" content="Sua escolha muda o cenário">
 <meta property="og:description" content="{DESC}">
 <meta property="og:url" content="{URL}">
-<meta property="og:image" content="{URL}og.jpg?v=2">
-<meta property="og:image:secure_url" content="{URL}og.jpg?v=2">
+<meta property="og:image" content="{URL}og.jpg?v=3">
+<meta property="og:image:secure_url" content="{URL}og.jpg?v=3">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -40,7 +40,7 @@ head = f"""<!doctype html>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sua escolha muda o cenário">
 <meta name="twitter:description" content="{DESC}">
-<meta name="twitter:image" content="{URL}og.jpg?v=2">
+<meta name="twitter:image" content="{URL}og.jpg?v=3">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -69,7 +69,7 @@ rodape = """
 </footer>
 <script>
 $("btnCompartilhar").addEventListener("click", async () => {
-  const dados = {title:"Sua escolha muda o cenário", text:"20 perguntas de sim ou não, cada uma com fonte, para te ajudar a decidir e para conversar com indecisos no 2º turno:", url:"https://suaescolha.pages.dev/?v=2"};
+  const dados = {title:"Sua escolha muda o cenário", text:"24 perguntas de sim ou não, cada uma com fonte, para te ajudar a decidir e para conversar com indecisos no 2º turno:", url:"https://suaescolha.pages.dev/?v=3"};
   if (navigator.share) { try { await navigator.share(dados); } catch(e){} return; }
   try { await navigator.clipboard.writeText(dados.url); $("avisoCompartilhar").textContent = "Link copiado."; }
   catch(e){ $("avisoCompartilhar").textContent = dados.url; }

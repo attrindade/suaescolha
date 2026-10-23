@@ -1,7 +1,7 @@
 {
   "name": "Sua escolha muda o cenário",
   "short_name": "Sua Escolha",
-  "description": "20 perguntas de sim ou não, cada uma com fonte, para te ajudar a decidir e para conversar com indecisos no 2º turno.",
+  "description": "24 perguntas de sim ou não, cada uma com fonte, para te ajudar a decidir e para conversar com indecisos no 2º turno.",
   "lang": "pt-BR",
   "start_url": "/",
   "scope": "/",
